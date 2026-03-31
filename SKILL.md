@@ -5,6 +5,13 @@ description: Memory governance core for AI agents. Defines what is worth remembe
 
 # Memory Governor
 
+Reusable memory-governance core for different host environments.
+
+The OpenClaw integration in this repository is only a reference host profile, not the only host model.
+
+It is not a second-brain system, sync bus, or knowledge manager.  
+It governs what should be remembered, where it should go, when it should be promoted, and what should be excluded.
+
 这是一个可复用于不同宿主环境的记忆治理内核。
 
 当前仓库中的 OpenClaw 集成只是它的一个 reference host profile，不是唯一宿主。
@@ -22,6 +29,13 @@ description: Memory governance core for AI agents. Defines what is worth remembe
 
 ## When to Use
 
+Use this skill when:
+
+- you need to decide whether something should enter memory
+- you need to choose the right memory layer or target class
+- you need to promote daily / correction / working state into durable rules
+- multiple skills are starting to define memory differently and need governance
+
 在这些场景使用：
 
 - 需要判断一条信息是否应该进入记忆系统
@@ -31,6 +45,14 @@ description: Memory governance core for AI agents. Defines what is worth remembe
 - 发现多个 skill 对“记忆”有不同写法或不同口径，需要治理
 
 ## First Reading Path
+
+If this is your first time opening `memory-governor`, start here:
+
+1. `SKILL.md`
+2. `references/memory-routing.md`
+3. `references/promotion-rules.md`
+4. `references/exclusions.md`
+5. `references/adapters.md`
 
 如果你是第一次接触 `memory-governor`，先读这些：
 

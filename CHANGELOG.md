@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.2-beta - 2026-03-31
+
+### Added
+
+- bilingual public-facing intro sections in `README.md`
+- bilingual opening guidance in `SKILL.md`
+
+### Changed
+
+- public packaging now reads more clearly for both English and Chinese readers
+
 ## 0.2.1-beta - 2026-03-31
 
 ### Added

@@ -1,6 +1,7 @@
 # Memory Governor
 
-Memory governance core for AI agents.
+Memory governance core for AI agents.  
+AI agent 的记忆治理内核。
 
 `memory-governor` helps you decide:
 
@@ -13,6 +14,31 @@ It is designed for agents that already have multiple memory layers, multiple ski
 
 It is **not** a second-brain platform, sync bus, or universal knowledge manager.  
 It is a governance layer.
+
+## 中文摘要
+
+`memory-governor` 给 agent 一套共享的记忆 contract。
+
+它帮助宿主判断：
+
+- 什么应该记
+- 该先路由到哪个 target class
+- 该由哪个 adapter 落地
+- 哪些短期信息值得升格
+- 什么根本不该进入记忆
+
+它特别适合：
+
+- 已经有多层记忆的宿主
+- 有多个会写记忆的 skill
+- optional adapter 越来越多、边界开始变乱的系统
+
+它 **不会** 在安装时静默重写宿主。  
+推荐用这三种状态来理解它：
+
+- `Installed`：治理内核已可用
+- `Integrated`：宿主已显式接线
+- `Validated`：checker 已确认接线状态
 
 ## English Summary
 
@@ -45,6 +71,16 @@ The intended model is:
 - Generic host example, bootstrap script, and host checker
 - OpenClaw-compatible reference profile without making OpenClaw the default world
 
+## 一眼看懂
+
+- 标准化的 agent memory target classes
+- `memory type -> target class -> adapter / fallback`
+- 面向 current-task / recovery memory 的 stateful target 规则
+- 明确的 `Installed / Integrated / Validated` readiness 模型
+- 通过 `memory-governor-host.toml` 声明宿主 contract
+- 自带 generic host 示例、bootstrap 脚本和 host checker
+- 兼容 OpenClaw，但不把 OpenClaw 写成默认世界观
+
 `memory-governor` 是一个给 AI agent 用的记忆治理内核。
 
 它解决的不是“怎么把所有东西都存起来”，而是更基础的问题：
@@ -68,9 +104,17 @@ The intended model is:
 
 Current version:
 
-- `0.2.1-beta`
+- `0.2.2-beta`
 
 ## It Is Not
+
+In short, it is not:
+
+- a second-brain platform
+- a Notion / Obsidian sync engine
+- a universal sync bus
+- an auto-archiving system
+- a catch-all knowledge manager
 
 它不是：
 
@@ -197,6 +241,14 @@ Current version:
 
 ## Installation
 
+English quick view:
+
+1. Install `memory-governor`
+2. Read `SKILL.md`
+3. Decide whether to integrate it into the host
+
+Install does **not** silently modify `AGENTS.md`, other skill files, or existing memory files.
+
 最小安装只需要：
 
 1. 安装 `memory-governor`
@@ -251,6 +303,14 @@ Current version:
 - `references/openclaw-adoption-prompts.md`
 
 ## First Reading Path
+
+English quick reading path:
+
+1. `SKILL.md`
+2. `references/memory-routing.md`
+3. `references/promotion-rules.md`
+4. `references/exclusions.md`
+5. `references/adapters.md`
 
 如果你是第一次打开这个 skill，推荐按这个顺序读：
 
