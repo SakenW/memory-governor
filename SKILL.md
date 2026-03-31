@@ -12,6 +12,9 @@ The OpenClaw integration in this repository is only a reference host profile, no
 It is not a second-brain system, sync bus, or knowledge manager.  
 It governs what should be remembered, where it should go, when it should be promoted, and what should be excluded.
 
+It is a governance kernel, not an execution-first productivity skill.
+Its value is highest when a host already has multiple memory layers, multiple memory-writing skills, or adapter drift.
+
 这是一个可复用于不同宿主环境的记忆治理内核。
 
 当前仓库中的 OpenClaw 集成只是它的一个 reference host profile，不是唯一宿主。
@@ -26,6 +29,9 @@ It governs what should be remembered, where it should go, when it should be prom
 4. 定义什么不要记
 
 如果没有读取顺序、状态更新语义和生命周期规则，记忆治理是不完整的。
+
+它更适合复杂宿主，而不是极小、极简单的单 agent 场景。
+如果系统还没有明显的多层记忆或多 skill 路由问题，它可能会显得偏重。
 
 ## When to Use
 

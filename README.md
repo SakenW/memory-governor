@@ -104,7 +104,7 @@ The intended model is:
 
 Current version:
 
-- `0.2.4-beta`
+- `0.2.5-beta`
 
 ## It Is Not
 
@@ -125,6 +125,50 @@ In short, it is not:
 - 大而全知识管理平台
 
 它只负责治理。
+
+## Who It Is For
+
+`memory-governor` is most useful when your host is already getting complicated.
+
+Good fit:
+
+- multiple memory layers already exist
+- multiple skills write memory or memory-like state
+- optional adapters are starting to create routing ambiguity
+- you want one shared contract before the system gets messier
+
+Probably overkill:
+
+- a small single-agent setup
+- very little memory beyond one or two files
+- no reusable lessons layer
+- no need for host-level integration or validation
+
+In short:
+
+- this is a governance kernel for complex agent systems
+- it is not a “use it once and get instant productivity” skill
+
+## Why It Feels Different
+
+Some skills are execution tools.  
+This one is infrastructure.
+
+It does not try to:
+
+- complete a task directly
+- auto-organize your whole knowledge base
+- silently take over your host on install
+
+Instead, it gives you:
+
+- shared memory vocabulary
+- shared routing rules
+- shared promotion rules
+- shared fallback rules
+
+That means its value compounds when the host gets more complex.
+It is usually less impressive in a tiny or short-lived setup, and more valuable in a multi-skill system that is starting to drift.
 
 ## What It Gives You
 

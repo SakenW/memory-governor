@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.5-beta - 2026-03-31
+
+### Changed
+
+- public README now states more clearly that `memory-governor` is a governance kernel, not an execution-first skill
+- public positioning now explains who should use it and when it may feel too heavy
+
 ## 0.2.4-beta - 2026-03-31
 
 ### Fixed
