@@ -12,6 +12,7 @@
 - 当前环境优先使用哪个 adapter？
 - 如果 adapter 不存在，fallback 去哪里？
 - 宿主是否已经用 `memory-governor-host.toml` 显式声明 adapter map？
+- 如果 `reusable_lessons` 不是单文件，它是 `directory` 还是 `pattern`，这个 mode 是否已显式声明？
 - 如果是 stateful target，它应该 append、replace 还是 merge？
 - 如果多个 skill 会写同一 target，谁是 canonical writer？
 - 如果宿主想做自动化校验，是否采用结构化 frontmatter？

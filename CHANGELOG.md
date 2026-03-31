@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.3-beta - 2026-03-31
+
+### Added
+
+- migration guide for hosts that already have a messy memory setup
+- manifest examples for `reusable_lessons` as `directory` or `pattern`
+
+### Changed
+
+- host checker and manifest contract now support `fallback_paths`
+- installation and integration docs now point legacy hosts to the migration path
+- integration checklist now calls out non-single `reusable_lessons` modes explicitly
+
 ## 0.2.2-beta - 2026-03-31
 
 ### Added

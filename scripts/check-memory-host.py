@@ -70,6 +70,15 @@ def resolve_manifest_path(root: pathlib.Path, raw_path: str) -> pathlib.Path:
     return (root / expanded).resolve()
 
 
+def validate_manifest_paths_array(entry: dict, field_name: str) -> tuple[list[str] | None, str | None]:
+    value = entry.get(field_name)
+    if value is None:
+        return None, None
+    if not isinstance(value, list) or not value or not all(isinstance(p, str) for p in value):
+        return None, f"{field_name} must be a non-empty string array if present"
+    return value, None
+
+
 def find_manifest(root: pathlib.Path) -> pathlib.Path | None:
     candidate = root / DEFAULT_MANIFEST_NAME
     if candidate.exists():
@@ -157,6 +166,11 @@ def check_manifest(root: pathlib.Path, manifest_path: pathlib.Path) -> list[Chec
             results.append(CheckResult("ERROR", f"{target_name}: paths must be a non-empty string array"))
             continue
 
+        fallback_paths, fallback_error = validate_manifest_paths_array(entry, "fallback_paths")
+        if fallback_error is not None:
+            results.append(CheckResult("ERROR", f"{target_name}: {fallback_error}"))
+            continue
+
         if mode == "single" and len(paths) != 1:
             results.append(CheckResult("ERROR", f"{target_name}: single mode must declare exactly one path"))
             continue
@@ -171,16 +185,43 @@ def check_manifest(root: pathlib.Path, manifest_path: pathlib.Path) -> list[Chec
             continue
 
         resolved_paths = [resolve_manifest_path(root, raw_path) for raw_path in paths]
+        resolved_fallback_paths = (
+            [resolve_manifest_path(root, raw_path) for raw_path in fallback_paths]
+            if fallback_paths is not None
+            else []
+        )
 
         if mode in {"single", "split"}:
-            missing = [resolved for resolved in resolved_paths if not resolved.exists()]
-            if missing:
-                for missing_path in missing:
+            primary_missing = [resolved for resolved in resolved_paths if not resolved.exists()]
+            primary_ok = not primary_missing
+            fallback_ok = False
+
+            if primary_ok:
+                for resolved_path in resolved_paths:
+                    results.append(CheckResult("OK", f"{target_name}: {rel(resolved_path, root)}"))
+            elif resolved_fallback_paths:
+                fallback_missing = [resolved for resolved in resolved_fallback_paths if not resolved.exists()]
+                if not fallback_missing:
+                    fallback_ok = True
+                    for resolved_path in resolved_fallback_paths:
+                        results.append(CheckResult("OK", f"{target_name}: fallback {rel(resolved_path, root)}"))
+                else:
+                    for missing_path in primary_missing:
+                        results.append(CheckResult("WARN", f"{target_name}: primary missing {rel(missing_path, root)}"))
+                    for missing_path in fallback_missing:
+                        results.append(CheckResult("ERROR", f"{target_name}: fallback missing {rel(missing_path, root)}"))
+                    continue
+            else:
+                for missing_path in primary_missing:
                     results.append(CheckResult("ERROR", f"{target_name}: missing {rel(missing_path, root)}"))
                 continue
 
+            active_paths = resolved_paths if primary_ok else resolved_fallback_paths
+        else:
+            active_paths = resolved_paths
+
         if mode == "directory":
-            directory = resolved_paths[0]
+            directory = active_paths[0]
             if directory.exists() and directory.is_dir():
                 results.append(CheckResult("OK", f"{target_name}: {rel(directory, root)}"))
             else:
@@ -193,12 +234,12 @@ def check_manifest(root: pathlib.Path, manifest_path: pathlib.Path) -> list[Chec
             continue
 
         if structured and mode == "single":
-            results.extend(check_structured(root, resolved_paths[0], f"{target_name} manifest target"))
+            results.extend(check_structured(root, active_paths[0], f"{target_name} manifest target"))
             continue
 
         if structured and mode == "split":
             structured_ok = False
-            for resolved_path in resolved_paths:
+            for resolved_path in active_paths:
                 errors = validate_structured_file(resolved_path)
                 if not errors:
                     structured_ok = True
@@ -208,9 +249,6 @@ def check_manifest(root: pathlib.Path, manifest_path: pathlib.Path) -> list[Chec
             if not structured_ok:
                 results.append(CheckResult("ERROR", f"{target_name}: split adapter has no schema-valid canonical slice"))
             continue
-
-        for resolved_path in resolved_paths:
-            results.append(CheckResult("OK", f"{target_name}: {rel(resolved_path, root)}"))
 
     return results
 

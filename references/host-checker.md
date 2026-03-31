@@ -28,6 +28,7 @@ manifest 优先。只有没有 manifest 时，才回退到 reference profile。
 - 对 reference profiles 给出稳定检查
 - 对 richer external adapters 做 presence check
 - 对结构化 fallback 文件做 schema validation
+- 对 manifest 中声明的 `fallback_paths` 做降级可用性检查
 
 ## Usage
 
@@ -71,6 +72,7 @@ python3 scripts/check-memory-host.py /path/to/host-root --profile generic
 - `memory-governor-host.toml`
 - target-specific `mode`
 - target-specific `paths`
+- target-specific `fallback_paths`
 - structured targets 的 schema validity
 - split adapter 是否至少有一个 canonical slice
 

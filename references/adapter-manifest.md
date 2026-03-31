@@ -90,6 +90,38 @@ paths = ["notes/daily/YYYY-MM-DD.md"]
 - `~` 会展开到当前用户 home
 - `single` 必须只有一个路径
 - `split` 至少两个路径
+- `directory` 应声明一个目录根，而不是具体文件
+- `pattern` 应声明一个稳定命名模式，而不是临时通配符
+
+### `fallback_paths`
+
+可选字符串数组。
+
+用于声明：
+
+- primary adapter 不可用时
+- 当前 target class 可以退回到哪些本地 fallback 路径
+
+示例：
+
+```toml
+[targets.reusable_lessons]
+mode = "single"
+paths = ["~/self-improving/memory.md"]
+fallback_paths = ["memory/reusable-lessons.md"]
+structured = false
+```
+
+解释：
+
+- `paths` 表示宿主当前优先使用的 adapter
+- `fallback_paths` 表示 primary 缺失时可接受的本地降级落点
+
+当前 checker 的行为是：
+
+- primary 存在时，按 primary 检查
+- primary 缺失但 fallback 完整存在时，给出 fallback `OK`
+- primary 和 fallback 都缺时，报错
 
 ### `structured`
 
@@ -143,6 +175,63 @@ paths = ["memory/working-buffer.md"]
 structured = true
 ```
 
+## Primary + Fallback Example
+
+```toml
+[targets.proactive_state]
+mode = "split"
+paths = ["~/proactivity/memory.md", "~/proactivity/session-state.md"]
+fallback_paths = ["memory/proactive-state.md"]
+structured = false
+
+[targets.working_buffer]
+mode = "single"
+paths = ["~/proactivity/memory/working-buffer.md"]
+fallback_paths = ["memory/working-buffer.md"]
+structured = false
+```
+
+## Reusable Lessons as Directory
+
+如果宿主按 domain 或 project 拆分 `reusable_lessons`，推荐直接声明成 `directory`：
+
+```toml
+[targets.reusable_lessons]
+mode = "directory"
+paths = ["memory/reusable-lessons"]
+structured = false
+```
+
+常见布局例如：
+
+- `memory/reusable-lessons/general.md`
+- `memory/reusable-lessons/product.md`
+- `memory/reusable-lessons/project-alpha.md`
+
+这表示：
+
+- `reusable_lessons` 仍然是一个 target class
+- 只是 adapter 选择按目录承载，而不是单文件承载
+
+## Reusable Lessons as Pattern
+
+如果宿主想保留显式命名约定，也可以用 `pattern`：
+
+```toml
+[targets.reusable_lessons]
+mode = "pattern"
+paths = ["memory/reusable-lessons/*.md"]
+structured = false
+```
+
+适合：
+
+- host 已经有稳定文件命名规则
+- checker 当前只需要承认这个 target 的存在方式
+- 你还不想把它收紧成单目录 contract
+
+对于 `pattern`，当前 checker 会验证声明本身，不会尝试枚举所有匹配文件。
+
 ## Split Adapter Example
 
 ```toml
@@ -157,6 +246,20 @@ structured = true
 
 对于 `split` adapter，checker 会把“至少一个 canonical current-state slice 通过 schema 校验”视为通过条件。
 
+## Mode Selection Advice
+
+对 `reusable_lessons` 来说，推荐顺序通常是：
+
+1. `single`
+2. `directory`
+3. `pattern`
+
+选择原则：
+
+- 想要最简单、最强约束：`single`
+- 已经按 domain / project 拆分：`directory`
+- 已有成熟命名约定但不想重构：`pattern`
+
 ## Checker Behavior
 
 `check-memory-host.py` 的顺序是：
@@ -166,6 +269,11 @@ structured = true
 3. 如果不存在，才回退到 reference profile auto-detect
 
 这意味着 manifest 优先级高于目录猜测。
+
+在 manifest 内部，优先级则是：
+
+1. `paths`
+2. `fallback_paths`
 
 ## Recommended Practice
 

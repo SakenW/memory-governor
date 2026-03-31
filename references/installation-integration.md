@@ -206,6 +206,10 @@ generic package 自带 fallback 模板：
 
 - `bootstrap.md`
 
+如果你是从已有散乱宿主收敛，而不是从空白宿主开始，可先看：
+
+- `migration-guide.md`
+
 ## 完整接入方案
 
 适合准备把它作为正式内核的人。
