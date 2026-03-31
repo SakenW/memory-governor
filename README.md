@@ -1,5 +1,29 @@
 # Memory Governor
 
+Memory governance core for AI agents.
+
+`memory-governor` helps you decide:
+
+- what is worth remembering
+- where it should go
+- when it should be promoted
+- what should be excluded
+
+It is designed for agents that already have multiple memory layers, multiple skills that write memory, or optional memory-related adapters.
+
+It is **not** a second-brain platform, sync bus, or universal knowledge manager.  
+It is a governance layer.
+
+## At a Glance
+
+- Standard target classes for agent memory
+- `memory type -> target class -> adapter / fallback`
+- Stateful target rules for current-task and recovery memory
+- Explicit `Installed / Integrated / Validated` readiness model
+- Host manifest support via `memory-governor-host.toml`
+- Generic host example, bootstrap script, and host checker
+- OpenClaw-compatible reference profile without making OpenClaw the default world
+
 `memory-governor` 是一个给 AI agent 用的记忆治理内核。
 
 它解决的不是“怎么把所有东西都存起来”，而是更基础的问题：
