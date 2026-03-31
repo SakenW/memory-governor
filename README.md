@@ -14,6 +14,27 @@ It is designed for agents that already have multiple memory layers, multiple ski
 It is **not** a second-brain platform, sync bus, or universal knowledge manager.  
 It is a governance layer.
 
+## English Summary
+
+`memory-governor` gives agents a shared memory contract.
+
+It helps a host decide:
+
+- what should be remembered
+- which target class it belongs to
+- which adapter should store it
+- when short-term information should be promoted
+- what should never enter memory at all
+
+It works best for hosts that already have multiple memory layers, optional memory-related skills, or growing routing ambiguity.
+
+It does **not** silently rewrite the host on install.  
+The intended model is:
+
+- `Installed`: the governance core is available
+- `Integrated`: the host is explicitly wired to it
+- `Validated`: the host checker confirms the wiring
+
 ## At a Glance
 
 - Standard target classes for agent memory
@@ -47,7 +68,7 @@ It is a governance layer.
 
 Current version:
 
-- `0.2.0-beta`
+- `0.2.1-beta`
 
 ## It Is Not
 

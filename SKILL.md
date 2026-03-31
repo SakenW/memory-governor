@@ -1,6 +1,6 @@
 ---
 name: memory-governor
-description: 记忆治理内核。统一定义什么值得记、该记到哪、何时升级、什么不要记，并为其他 skill 提供统一的 memory contract。用于设计或执行记忆路由、记忆提炼、记忆边界治理时触发。
+description: Memory governance core for AI agents. Defines what is worth remembering, where it should go, when it should be promoted, and what should be excluded, while providing a shared memory contract for other skills. 记忆治理内核。统一定义什么值得记、该记到哪、何时升级、什么不要记，并为其他 skill 提供统一的 memory contract。
 ---
 
 # Memory Governor

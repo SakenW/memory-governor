@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.1-beta - 2026-03-31
+
+### Added
+
+- clearer English public-facing summary in `README.md`
+- bilingual skill description in `SKILL.md` for ClawHub-facing metadata
+
+### Changed
+
+- public packaging now explains the `Installed / Integrated / Validated` model more clearly for external readers
+
 ## 0.2.0-beta - 2026-03-31
 
 This is the first distributable beta shape of `memory-governor`.
