@@ -107,6 +107,18 @@
 
 但这只意味着你达到了 `Installed`，不意味着已经 `Integrated`。
 
+## Python Compatibility
+
+当前脚本默认兼容：
+
+- Python 3.11+：使用标准库 `tomllib`
+- Python 3.9 / 3.10：需要额外安装 `tomli`
+
+涉及的脚本主要包括：
+
+- `scripts/check-memory-host.py`
+- `scripts/validate-memory-frontmatter.py`
+
 ## 包外集成点
 
 以下文件属于“可选集成点”。

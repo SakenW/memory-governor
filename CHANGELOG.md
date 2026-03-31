@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.4-beta - 2026-03-31
+
+### Fixed
+
+- `check-memory-host.py` and `validate-memory-frontmatter.py` now support Python 3.9 / 3.10 via `tomli` fallback
+
+### Changed
+
+- installation docs now call out Python version compatibility explicitly
+
 ## 0.2.3-beta - 2026-03-31
 
 ### Added

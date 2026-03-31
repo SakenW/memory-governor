@@ -104,7 +104,7 @@ The intended model is:
 
 Current version:
 
-- `0.2.3-beta`
+- `0.2.4-beta`
 
 ## It Is Not
 
@@ -248,6 +248,11 @@ English quick view:
 3. Decide whether to integrate it into the host
 
 Install does **not** silently modify `AGENTS.md`, other skill files, or existing memory files.
+
+Script compatibility:
+
+- Python 3.11+ works with the standard-library `tomllib`
+- Python 3.9 / 3.10 should install `tomli`
 
 最小安装只需要：
 

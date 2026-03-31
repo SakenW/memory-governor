@@ -6,7 +6,10 @@ import argparse
 import importlib.util
 import pathlib
 import sys
-import tomllib
+try:
+    import tomllib
+except ModuleNotFoundError:
+    import tomli as tomllib
 from dataclasses import dataclass
 
 
