@@ -1,8 +1,6 @@
 # Memory Governor Testing Strategy
 
-## Goal
-
-English summary:
+## English Summary
 
 This document defines a layered testing strategy for `memory-governor`.
 It separates:
@@ -13,6 +11,21 @@ It separates:
 
 The goal is to avoid mixing runtime checks with policy evaluation.
 
+In short:
+
+- automate what is mechanical
+- scenario-test what is judgment-heavy
+- do not treat governance quality like a pure parser problem
+
+Recommended layers:
+
+- Layer 1: package smoke tests
+- Layer 2: script correctness tests
+- Layer 3: host integration tests
+- Layer 4: governance evaluation tests
+
+## 目标
+
 为 `memory-governor` 设计一套分层测试方案，回答三个不同问题：
 
 1. **脚本有没有坏**
@@ -21,13 +34,7 @@ The goal is to avoid mixing runtime checks with policy evaluation.
 
 这三类问题不能混在一起测。
 
-## Core Principle
-
-In short:
-
-- automate what is mechanical
-- scenario-test what is judgment-heavy
-- do not treat governance quality like a pure parser problem
+## 核心原则
 
 `memory-governor` 不是执行型 skill。  
 它的价值来自：
@@ -39,14 +46,7 @@ In short:
 
 所以测试也要分层。
 
-## Test Pyramid
-
-English outline:
-
-- Layer 1: package smoke tests
-- Layer 2: script correctness tests
-- Layer 3: host integration tests
-- Layer 4: governance evaluation tests
+## 测试金字塔
 
 建议分 4 层。
 
@@ -283,12 +283,7 @@ python3 scripts/validate-memory-frontmatter.py \
   examples/generic-host/memory/working-buffer.md
 ```
 
-## Recommendation
-
-English summary:
-
-Start with Layers 1-3 as repeatable automated checks.
-Keep Layer 4 as scenario-based human evaluation until a proposed new target class proves its value.
+## 建议
 
 最合理的测试设计不是“先造完整测试框架”，而是：
 

@@ -1,8 +1,8 @@
 # Releases
 
-This directory stores per-version release notes.
+## English
 
-这个目录保存按版本归档的 release notes。
+This directory stores per-version release notes.
 
 It is useful for:
 
@@ -10,12 +10,16 @@ It is useful for:
 - public release packaging
 - beta-by-beta historical context
 
+Normal installation does not require reading every file here.
+
+## 中文
+
+这个目录保存按版本归档的 release notes。
+
 它主要用于：
 
 - 深挖 changelog 细节
 - 公开发布包装
 - 按 beta 版本追踪历史变化
-
-Normal installation does not require reading every file here.
 
 普通安装不需要逐个阅读这里的所有文件。
