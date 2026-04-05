@@ -1,0 +1,12 @@
+version = "0.1"
+profile = "custom"
+
+[targets.system_rules]
+mode = "single"
+paths = ["HOST.md"]
+structured = false
+
+[targets.learning_candidates]
+mode = "single"
+paths = ["memory/learning-candidates.md"]
+structured = false

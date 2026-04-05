@@ -1,0 +1,37 @@
+version = "0.1"
+profile = "custom"
+
+[targets.long_term_memory]
+mode = "single"
+paths = ["memory/long-term.md"]
+structured = false
+
+[targets.daily_memory]
+mode = "pattern"
+paths = ["notes/daily/YYYY-MM-DD.md"]
+structured = false
+
+[targets.reusable_lessons]
+mode = "directory"
+paths = ["memory/reusable-lessons"]
+structured = false
+
+[targets.working_buffer]
+mode = "single"
+paths = ["memory/working-buffer.md"]
+structured = true
+
+[targets.project_facts]
+mode = "single"
+paths = ["docs/project-facts.md"]
+structured = false
+
+[targets.system_rules]
+mode = "single"
+paths = ["HOST.md"]
+structured = false
+
+[targets.tool_rules]
+mode = "single"
+paths = ["docs/tool-rules.md"]
+structured = false

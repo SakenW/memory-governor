@@ -1,0 +1,7 @@
+version = "0.1"
+profile = "custom"
+
+[targets.reusable_lessons]
+mode = "bogus"
+paths = ["memory/reusable-lessons.md"]
+structured = true

@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.6-beta - 2026-04-05
+
+### Added
+
+- maintainer-facing `tests/` with validator, host-checker, and bootstrap coverage
+- more complex host fixtures covering split, directory/pattern, unknown target, and missing fallback cases
+- `dev/` area for plans and evaluation materials
+- `releases/` directory for versioned release notes
+
+### Changed
+
+- repository layout is now clearer about runtime package vs maintainer-only material
+- maintainer entry docs are now bilingual in `dev/` and `releases/`
+
 ## 0.2.5-beta - 2026-03-31
 
 ### Changed

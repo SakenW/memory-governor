@@ -104,7 +104,34 @@ The intended model is:
 
 Current version:
 
-- `0.2.5-beta`
+- `0.2.6-beta`
+
+## Package Layout
+
+This repository is intentionally split into runtime, examples, tests, and maintainer material.
+
+Runtime package:
+
+- `SKILL.md`
+- `README.md`
+- `VERSION`
+- `references/`
+- `assets/`
+- `scripts/`
+
+Integration example:
+
+- `examples/generic-host/`
+
+Maintainer-only material:
+
+- `tests/`
+- `dev/plans/`
+- `dev/eval-lab/`
+- `releases/`
+
+Normal installation is about the runtime package.
+Tests and maintainer notes are useful for development, but they are not required for basic use.
 
 ## It Is Not
 
@@ -351,6 +378,12 @@ Script compatibility:
 - `references/host-checker.md`
 - `references/openclaw-adoption-prompts.md`
 
+If you are maintaining the package itself, also see:
+
+- `tests/`
+- `dev/README.md`
+- `releases/README.md`
+
 ## First Reading Path
 
 English quick reading path:
@@ -410,7 +443,7 @@ English quick reading path:
 
 - `VERSION`
 - `CHANGELOG.md`
-- `RELEASE-NOTES-0.2.0-beta.md`
+- `releases/`
 - `SKILL.md`
 - `examples/generic-host/README.md`
 - `references/bootstrap.md`
@@ -432,6 +465,22 @@ English quick reading path:
 - `references/skill-integration.md`
 - `references/integration-checklist.md`
 - `references/host-profiles.md`
+
+## Testing
+
+For normal installation, you do not need the test suite.
+
+For package maintenance, the test entry point is:
+
+```sh
+python3 -m unittest discover -s tests -p 'test_*.py' -v
+```
+
+The tests are maintainer-facing and currently cover:
+
+- frontmatter validation
+- host checker behavior
+- bootstrap -> checker flow
 
 ## Current Status
 
