@@ -9,12 +9,16 @@
 - fallback template for candidate-layer capture
 - checker, validator, and generic host example support for `learning_candidates`
 - candidate review workflow documentation and `review-learning-candidates.py` helper
+- stronger candidate entry lifecycle guidance, including `lifecycle_stage` and `evidence_count`
+- machine-checkable integration checks for host entry files and writer skill contracts
+- OpenClaw-style simulated tests covering fallback-only, external-adapter, partial-adapter, and invalid-schema scenarios
 
 ### Changed
 
 - explicit corrections now route to `learning_candidates` by default instead of hardening immediately
 - promotion rules now describe minimal candidate-to-lesson thresholds
 - skill integration docs now explain correction staging and sampling boundaries
+- host validation now checks for real `memory-governor` / `Memory Contract` markers instead of file existence only
 
 ## 0.2.7 - 2026-04-05
 
