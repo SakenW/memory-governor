@@ -74,6 +74,7 @@ python3 scripts/check-memory-host.py /path/to/host-root --profile generic
 - target-specific `paths`
 - target-specific `fallback_paths`
 - structured targets 的 schema validity
+- `learning_candidates` 这类已标准化新 target 的 recognition
 - split adapter 是否至少有一个 canonical slice
 
 manifest 格式见：

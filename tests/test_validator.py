@@ -22,6 +22,7 @@ class ValidatorTests(unittest.TestCase):
 
     def test_valid_files_pass(self) -> None:
         result = self.run_validator(
+            FIXTURES / "valid-learning-candidates.md",
             FIXTURES / "valid-proactive-state.md",
             FIXTURES / "valid-reusable-lessons.md",
             FIXTURES / "valid-working-buffer.md",
@@ -38,6 +39,11 @@ class ValidatorTests(unittest.TestCase):
         result = self.run_validator(FIXTURES / "invalid-working-buffer-enum.md")
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("buffer_status must be one of", result.stderr)
+
+    def test_invalid_candidate_status_fails(self) -> None:
+        result = self.run_validator(FIXTURES / "invalid-learning-candidates-status.md")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("candidate_status must be one of", result.stderr)
 
     def test_missing_heading_fails(self) -> None:
         result = self.run_validator(FIXTURES / "invalid-reusable-lessons-heading.md")

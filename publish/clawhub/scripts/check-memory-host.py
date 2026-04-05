@@ -19,6 +19,7 @@ DEFAULT_MANIFEST_NAME = "memory-governor-host.toml"
 MANIFEST_TARGETS = {
     "long_term_memory",
     "daily_memory",
+    "learning_candidates",
     "reusable_lessons",
     "proactive_state",
     "working_buffer",
@@ -27,6 +28,7 @@ MANIFEST_TARGETS = {
     "tool_rules",
 }
 STRUCTURED_TARGETS = {
+    "learning_candidates",
     "reusable_lessons",
     "proactive_state",
     "working_buffer",

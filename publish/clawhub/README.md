@@ -9,6 +9,7 @@ AI agent 的记忆治理内核。
 - where it should go
 - when it should be promoted
 - what should be excluded
+- when a correction should stay a candidate instead of hardening immediately
 
 It is designed for agents that already have multiple memory layers, multiple skills that write memory, or optional memory-related adapters.
 
@@ -64,6 +65,8 @@ The intended model is:
 ## At a Glance
 
 - Standard target classes for agent memory
+- Low-commitment `learning_candidates` layer for corrections and emerging lessons
+- Candidate review helper for keep / promote / discard passes
 - `memory type -> target class -> adapter / fallback`
 - Stateful target rules for current-task and recovery memory
 - Explicit `Installed / Integrated / Validated` readiness model
@@ -104,7 +107,7 @@ The intended model is:
 
 Current version:
 
-- `0.2.6-beta`
+- `0.2.8`
 
 ## Package Layout
 
@@ -212,6 +215,7 @@ It is usually less impressive in a tiny or short-lived setup, and more valuable 
 - adapter / fallback 模型
 - stateful target 规则
 - 轻量 schema conventions + validator
+- 候选层 review helper
 - retention / read-order 规则
 - 轻量 bootstrap 入口
 - 路由规则
@@ -249,6 +253,7 @@ It is usually less impressive in a tiny or short-lived setup, and more valuable 
 
 - `long_term_memory`
 - `daily_memory`
+- `learning_candidates`
 - `reusable_lessons`
 - `proactive_state`
 - `working_buffer`
@@ -263,6 +268,8 @@ It is usually less impressive in a tiny or short-lived setup, and more valuable 
 比如：
 
 - `daily_memory` -> `memory/YYYY-MM-DD.md`
+- `learning_candidates` -> `self-improving` if resolved
+- `learning_candidates` -> packaged fallback template if not
 - `proactive_state` -> `proactivity` if resolved
 - `proactive_state` -> packaged fallback template if not
 - `reusable_lessons` -> `self-improving` if resolved
@@ -302,6 +309,7 @@ It is usually less impressive in a tiny or short-lived setup, and more valuable 
 这个 demo skill 只做三件事：
 
 - 把当天关键进展路由到 `daily_memory`
+- 把明确纠错先路由到 `learning_candidates`
 - 把可复用经验路由到 `reusable_lessons`
 - 把临时恢复线索路由到 `working_buffer`
 
@@ -397,16 +405,18 @@ English quick reading path:
 1. `SKILL.md`
 2. `references/memory-routing.md`
 3. `references/promotion-rules.md`
-4. `references/exclusions.md`
-5. `references/adapters.md`
+4. `references/candidate-review.md`
+5. `references/exclusions.md`
+6. `references/adapters.md`
 
 如果你是第一次打开这个 skill，推荐按这个顺序读：
 
 1. `SKILL.md`
 2. `references/memory-routing.md`
 3. `references/promotion-rules.md`
-4. `references/exclusions.md`
-5. `references/adapters.md`
+4. `references/candidate-review.md`
+5. `references/exclusions.md`
+6. `references/adapters.md`
 
 然后再按需看这些：
 

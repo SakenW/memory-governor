@@ -9,4 +9,4 @@ candidate_status = "candidate"
 
 ## Candidates
 
-- This file exists to prove learning_candidates is now a standard validated target
+- old-style candidate note without a structured entry block

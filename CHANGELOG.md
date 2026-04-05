@@ -1,6 +1,22 @@
 # Changelog
 
-## 0.2.6-beta - 2026-04-05
+## 0.2.8 - 2026-04-05
+
+### Added
+
+- `learning_candidates` as a low-commitment target class for corrections and emerging lessons
+- `references/correction-pipeline.md` describing the staged correction flow
+- fallback template for candidate-layer capture
+- checker, validator, and generic host example support for `learning_candidates`
+- candidate review workflow documentation and `review-learning-candidates.py` helper
+
+### Changed
+
+- explicit corrections now route to `learning_candidates` by default instead of hardening immediately
+- promotion rules now describe minimal candidate-to-lesson thresholds
+- skill integration docs now explain correction staging and sampling boundaries
+
+## 0.2.7 - 2026-04-05
 
 ### Added
 

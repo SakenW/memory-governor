@@ -27,6 +27,7 @@ copy_path "references"
 copy_path "assets"
 copy_path "scripts/bootstrap-generic-host.sh"
 copy_path "scripts/check-memory-host.py"
+copy_path "scripts/review-learning-candidates.py"
 copy_path "scripts/validate-memory-frontmatter.py"
 copy_path "examples/generic-host"
 

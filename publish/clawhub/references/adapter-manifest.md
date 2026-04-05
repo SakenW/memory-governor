@@ -46,6 +46,7 @@ structured = true
 
 - `long_term_memory`
 - `daily_memory`
+- `learning_candidates`
 - `reusable_lessons`
 - `proactive_state`
 - `working_buffer`
@@ -131,6 +132,7 @@ structured = false
 
 默认建议：
 
+- `learning_candidates` -> `true`
 - `reusable_lessons` -> `true`
 - `proactive_state` -> `true`
 - `working_buffer` -> `true`
@@ -158,6 +160,11 @@ structured = false
 mode = "pattern"
 paths = ["notes/daily/YYYY-MM-DD.md"]
 structured = false
+
+[targets.learning_candidates]
+mode = "single"
+paths = ["memory/learning-candidates.md"]
+structured = true
 
 [targets.reusable_lessons]
 mode = "single"

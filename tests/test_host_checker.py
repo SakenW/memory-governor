@@ -52,11 +52,11 @@ class HostCheckerTests(unittest.TestCase):
         self.assertIn("pattern notes/daily/YYYY-MM-DD.md", result.stdout)
         self.assertIn("reusable_lessons: memory/reusable-lessons", result.stdout)
 
-    def test_unknown_target_warns_but_passes(self) -> None:
+    def test_learning_candidates_manifest_target_passes(self) -> None:
         result = self.run_checker(HOST_FIXTURES / "unknown-target")
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("STATUS: WARN", result.stdout)
-        self.assertIn("manifest target 'learning_candidates'", result.stdout)
+        self.assertIn("STATUS: PASS", result.stdout)
+        self.assertIn("learning_candidates manifest target", result.stdout)
 
     def test_missing_primary_and_fallback_fails(self) -> None:
         result = self.run_checker(HOST_FIXTURES / "missing-fallback")

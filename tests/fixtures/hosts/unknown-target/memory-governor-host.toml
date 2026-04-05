@@ -9,4 +9,4 @@ structured = false
 [targets.learning_candidates]
 mode = "single"
 paths = ["memory/learning-candidates.md"]
-structured = false
+structured = true

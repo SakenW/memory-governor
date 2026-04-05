@@ -11,6 +11,11 @@ mode = "pattern"
 paths = ["notes/daily/YYYY-MM-DD.md"]
 structured = false
 
+[targets.learning_candidates]
+mode = "single"
+paths = ["memory/learning-candidates.md"]
+structured = true
+
 [targets.reusable_lessons]
 mode = "single"
 paths = ["memory/reusable-lessons.md"]
