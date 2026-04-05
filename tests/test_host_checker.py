@@ -25,6 +25,8 @@ class HostCheckerTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("PROFILE: manifest", result.stdout)
         self.assertIn("STATUS: PASS", result.stdout)
+        self.assertIn("integration host entry", result.stdout)
+        self.assertIn("integration writer contract", result.stdout)
 
     def test_manifest_fallback_host_passes(self) -> None:
         result = self.run_checker(HOST_FIXTURES / "manifest-fallback")
@@ -63,6 +65,19 @@ class HostCheckerTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("STATUS: FAIL", result.stdout)
         self.assertIn("fallback missing", result.stdout)
+
+    def test_missing_declared_integration_path_fails(self) -> None:
+        result = self.run_checker(HOST_FIXTURES / "integration-missing")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("STATUS: FAIL", result.stdout)
+        self.assertIn("integration writer contract: missing", result.stdout)
+
+    def test_placeholder_integration_files_fail_semantic_checks(self) -> None:
+        result = self.run_checker(HOST_FIXTURES / "integration-placeholder")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("STATUS: FAIL", result.stdout)
+        self.assertIn("does not mention memory-governor", result.stdout)
+        self.assertIn("missing '## Memory Contract'", result.stdout)
 
 
 if __name__ == "__main__":

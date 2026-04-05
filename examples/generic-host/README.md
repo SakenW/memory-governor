@@ -21,6 +21,7 @@
   宿主级“记忆治理声明”
 - `memory-governor-host.toml`
   给 checker 读取的 machine-readable adapter manifest
+  现在也声明了 host entry 和 writer contract 路径
 - `adapter-map.md`
   这个宿主当前采用的 target class 到路径映射
 - `memory/long-term.md`

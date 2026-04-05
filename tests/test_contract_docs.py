@@ -68,9 +68,24 @@ class ContractDocsTests(unittest.TestCase):
         reviewer = read(REPO_ROOT / "scripts" / "review-learning-candidates.py")
 
         self.assertIn('"learning_candidates"', checker)
+        self.assertIn("host_entry_paths", checker)
+        self.assertIn("writer_contract_paths", checker)
         self.assertIn('"candidate_status"', validator)
         self.assertIn("test_learning_candidates_manifest_target_passes", host_checker_tests)
         self.assertIn("review overdue", reviewer)
+
+    def test_integration_host_fixtures_exist_for_checker_coverage(self) -> None:
+        required_paths = [
+            "tests/fixtures/hosts/integration-missing/HOST.md",
+            "tests/fixtures/hosts/integration-missing/memory-governor-host.toml",
+            "tests/fixtures/hosts/integration-placeholder/HOST.md",
+            "tests/fixtures/hosts/integration-placeholder/memory-governor-host.toml",
+            "tests/fixtures/hosts/integration-placeholder/skills/example-writer/SKILL.md",
+        ]
+
+        for relative_path in required_paths:
+            path = REPO_ROOT / relative_path
+            self.assertTrue(path.exists(), f"missing test fixture {relative_path}")
 
     def test_version_and_release_notes_match_new_contract_release(self) -> None:
         version = read(REPO_ROOT / "VERSION").strip()
@@ -88,15 +103,22 @@ class ContractDocsTests(unittest.TestCase):
             "README.md",
             "CHANGELOG.md",
             "VERSION",
+            "examples/generic-host/README.md",
+            "examples/generic-host/memory-governor-host.toml",
+            "references/adapter-manifest.md",
             "references/adapters.md",
             "references/candidate-review.md",
             "references/correction-pipeline.md",
+            "references/host-checker.md",
+            "references/installation-integration.md",
             "references/memory-routing.md",
+            "references/migration-guide.md",
             "references/promotion-rules.md",
             "references/read-order.md",
             "references/routing-precedence.md",
             "references/skill-integration.md",
             "assets/fallbacks/learning-candidates.md",
+            "scripts/check-memory-host.py",
             "scripts/review-learning-candidates.py",
         ]
 

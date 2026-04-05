@@ -26,6 +26,7 @@ class BootstrapTests(unittest.TestCase):
             self.assertEqual(bootstrap.returncode, 0, bootstrap.stderr)
             self.assertTrue((target / "HOST.md").exists())
             self.assertTrue((target / "memory-governor-host.toml").exists())
+            self.assertTrue((target / "skills" / "example-writer" / "SKILL.md").exists())
             self.assertTrue((target / "memory" / "learning-candidates.md").exists())
             self.assertTrue((target / "memory" / "proactive-state.md").exists())
 
