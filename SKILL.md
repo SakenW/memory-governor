@@ -121,6 +121,8 @@ See [references/correction-pipeline.md](references/correction-pipeline.md) for t
 
 See [references/candidate-review.md](references/candidate-review.md) for keep/promote/discard review workflow.
 
+See [references/dreaming-integration.md](references/dreaming-integration.md) for how this kernel should coexist with OpenClaw Dreaming without duplicate promotion paths.
+
 See [references/stateful-targets.md](references/stateful-targets.md) for update semantics on stateful targets.
 
 See [references/schema-conventions.md](references/schema-conventions.md) if the host wants stronger structured constraints.

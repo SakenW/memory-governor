@@ -2,7 +2,7 @@
 
 ## English
 
-`memory-governor` is a memory governance kernel for AI agents. It does not try to be a second-brain app, a sync bus, or a universal knowledge manager. Its job is narrower and more useful: define what is worth remembering, classify it before it touches storage, route it into stable target classes, decide when something should stay short-term, when it should be promoted, and when it should be excluded entirely. It is built for hosts that already have multiple memory layers, multiple skills that write memory, or optional adapters such as `self-improving` and `proactivity`, and need one shared contract before the system drifts into path-based chaos.
+`memory-governor` is a memory governance kernel for AI agents. It does not try to be a second-brain app, a sync bus, or a universal knowledge manager. Its job is narrower and more useful: define what is worth remembering, classify it before it touches storage, route it into stable target classes, decide when something should stay short-term, when it should be promoted, and when it should be excluded entirely. It is built for hosts that already have multiple memory layers, multiple skills that write memory, or optional adapters such as `self-improving` and `proactivity`, and need one shared contract before the system drifts into path-based chaos. In OpenClaw terms, it is designed to complement Dreaming rather than replace it: Dreaming can consolidate short-term signals into long-term memory, while `memory-governor` keeps correction staging, routing, and hardening boundaries explicit.
 
 In practice, `memory-governor` gives you a full governance stack for agent memory. It defines standard target classes such as `long_term_memory`, `daily_memory`, `learning_candidates`, `reusable_lessons`, `proactive_state`, `working_buffer`, `project_facts`, `system_rules`, and `tool_rules`. It separates `memory type -> target class -> adapter / fallback` so the core contract is not tied to any one plugin or directory layout. It adds a staged correction pipeline so explicit corrections and emerging lessons can land in `learning_candidates` before they harden into `reusable_lessons`. It includes candidate review guidance and a lightweight reviewer for keep / promote / discard decisions, stronger lifecycle guidance for candidate entries, schema validation for structured targets, a host manifest contract via `memory-governor-host.toml`, a host checker, a generic-host bootstrap flow, and OpenClaw-compatible reference behavior without making OpenClaw the only world that matters. The intended readiness model is explicit: `Installed` means the governance core is present, `Integrated` means the host has actually wired itself to the contract, and `Validated` means the checker has confirmed the current wiring.
 
@@ -12,9 +12,9 @@ In practice, `memory-governor` gives you a full governance stack for agent memor
 
 具体来说，`memory-governor` 现在已经提供了一整套相对完整的记忆治理能力。它定义了标准 target classes，包括 `long_term_memory`、`daily_memory`、`learning_candidates`、`reusable_lessons`、`proactive_state`、`working_buffer`、`project_facts`、`system_rules`、`tool_rules`。它把 `memory type -> target class -> adapter / fallback` 这层关系拆开，让治理内核不依赖某个特定插件或目录结构。它引入了候选层机制，让明确纠错和新出现但证据不足的经验先进入 `learning_candidates`，而不是立刻硬化进长期规则；同时又补上了 candidate review 流程、review helper、条目生命周期建议、结构化 schema 校验、宿主 manifest、host checker、generic host bootstrap，以及和 OpenClaw 相容但不被 OpenClaw 绑死的参考接入方式。推荐用三层 readiness 来理解它：`Installed` 表示内核已经可用，`Integrated` 表示宿主真的把它接上了，`Validated` 表示接线状态已经被工具确认。
 
-## 0.2.8 Features
+## 0.2.9 Features
 
-`0.2.8` 是这个项目第一次把“候选层记忆治理”真正做成可用 contract 的版本。当前版本的能力可以概括为：
+`0.2.9` 在 `0.2.8` 的候选层 contract 之上，补齐了和 OpenClaw Dreaming 的边界定义。当前版本的能力可以概括为：
 
 - 标准化 memory target classes，不再让每个 skill 自己发明一套全局记忆分类
 - 明确的 staged correction flow：`correction -> learning_candidates -> reusable_lessons`
@@ -26,10 +26,13 @@ In practice, `memory-governor` gives you a full governance stack for agent memor
 - `memory-governor-host.toml` manifest contract，用来声明 target class、adapter mode、fallback path、structured target 和 integration path
 - generic host example 和 bootstrap 脚本，方便从非 OpenClaw 宿主快速起一个最小可用骨架
 - OpenClaw profile checking 和 OpenClaw-style simulated tests，用来更接近真实使用场景地验证 fallback、本地/外部 adapter、半安装状态和 schema failure
+- Dreaming integration contract，明确 `memory-governor` 管 capture / routing / staging / hardening，Dreaming 管 `daily_memory -> long_term_memory` 的后台巩固
+- `DREAMS.md` 与 `memory/.dreams/` 的 engine-owned artifact 边界，避免把 Dreaming 产物误建模成普通 target class
+- Dreaming-aware read / promotion / capture 规则，避免人工 daily promotion 和 Dreaming 同时成为默认长期化 authority
 
 Current version:
 
-- `0.2.8`
+- `0.2.9`
 
 ## At a Glance
 

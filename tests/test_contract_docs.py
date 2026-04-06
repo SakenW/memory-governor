@@ -90,12 +90,12 @@ class ContractDocsTests(unittest.TestCase):
     def test_version_and_release_notes_match_new_contract_release(self) -> None:
         version = read(REPO_ROOT / "VERSION").strip()
         changelog = read(REPO_ROOT / "CHANGELOG.md")
-        release_notes = read(REPO_ROOT / "releases" / "RELEASE-NOTES-0.2.8.md")
+        release_notes = read(REPO_ROOT / "releases" / "RELEASE-NOTES-0.2.9.md")
 
-        self.assertEqual(version, "0.2.8")
-        self.assertIn("## 0.2.8 - 2026-04-05", changelog)
-        self.assertIn("# Memory Governor 0.2.8", release_notes)
-        self.assertIn("learning_candidates", release_notes)
+        self.assertEqual(version, "0.2.9")
+        self.assertIn("## 0.2.9 - 2026-04-07", changelog)
+        self.assertIn("# Memory Governor 0.2.9", release_notes)
+        self.assertIn("Dreaming", release_notes)
 
     def test_publish_bundle_is_synced_for_core_contract_files(self) -> None:
         relative_paths = [
@@ -109,6 +109,7 @@ class ContractDocsTests(unittest.TestCase):
             "references/adapters.md",
             "references/candidate-review.md",
             "references/correction-pipeline.md",
+            "references/dreaming-integration.md",
             "references/host-checker.md",
             "references/installation-integration.md",
             "references/memory-routing.md",
