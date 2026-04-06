@@ -1,6 +1,6 @@
 ---
 name: memory-governor
-description: Memory governance core for AI agents. Defines what is worth remembering, where it should go, when it should be promoted, and what should be excluded, while providing a shared memory contract for other skills.
+description: Memory governance kernel for AI agents that complements OpenClaw Dreaming with explicit correction staging, target-class routing, adapter boundaries, and safer manual hardening rules.
 ---
 
 # Memory Governor

@@ -55,11 +55,12 @@ class ContractDocsTests(unittest.TestCase):
         self.assertIn("## Sampling Boundary", content)
         self.assertIn("不要求所有宿主立刻接入自动 sampling", content)
 
-    def test_readme_deep_model_and_examples_include_learning_candidates(self) -> None:
+    def test_readme_homepage_positioning_includes_learning_candidates(self) -> None:
         content = read(REPO_ROOT / "README.md")
-        self.assertIn("当前标准 target classes：", content)
-        self.assertIn("- `learning_candidates`", content)
-        self.assertIn("把明确纠错先路由到 `learning_candidates`", content)
+        self.assertIn("Complements OpenClaw Dreaming instead of replacing it", content)
+        self.assertIn("`memory type -> target class -> adapter / fallback`", content)
+        self.assertIn("`learning_candidates` layer for explicit corrections", content)
+        self.assertIn("Dreaming 负责后台巩固", content)
 
     def test_checker_and_validator_support_learning_candidates(self) -> None:
         checker = read(REPO_ROOT / "scripts" / "check-memory-host.py")
