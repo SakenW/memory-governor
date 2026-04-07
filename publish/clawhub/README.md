@@ -1,12 +1,12 @@
 # Memory Governor
 
-**Memory governance for AI agents. Complements OpenClaw Dreaming instead of replacing it.**
+**Memory governance for AI agents. Now aligned with OpenClaw Dreaming.**
 
 Languages: **English** | [中文](#中文)
 
-`memory-governor` is a governance kernel for hosts that already have multiple memory layers, memory-writing skills, or optional adapters. It gives those systems one shared contract for deciding what should be remembered, where it should go, when it should stay temporary, and when it is safe to harden into durable guidance.
+`memory-governor` is a governance kernel for hosts that already have multiple memory layers, memory-writing skills, or optional adapters. It was built to give those systems one shared contract for deciding what should be remembered, where it should go, when it should stay temporary, and when it is safe to harden into durable guidance.
 
-OpenClaw Dreaming is great at background consolidation from short-term signals into long-term memory. `memory-governor` focuses on the adjacent gap: explicit correction staging, memory routing, adapter boundaries, and manual hardening rules.
+With OpenClaw 4.5, Dreaming now covers an important part of the broader memory problem: background consolidation from short-term signals into long-term memory. This release keeps `memory-governor` focused on the governance layer it was already designed for, while aligning its boundaries with Dreaming so the two do not compete.
 
 In short:
 
@@ -54,9 +54,15 @@ This is not an execution-first productivity skill. It is infrastructure for memo
 
 That keeps the core contract independent from any one plugin, folder layout, or host implementation.
 
-## Dreaming Compatibility
+## Alignment with Dreaming
 
-`memory-governor` should not compete with Dreaming.
+`memory-governor` was not created because Dreaming exists. It was created to govern memory capture, routing, staging, and hardening in hosts that were already becoming complex.
+
+Dreaming changes the integration boundary:
+
+- it should be preferred for `daily_memory -> long_term_memory`
+- it should not replace explicit correction staging
+- it should not turn `DREAMS.md` or `memory/.dreams/` into normal memory target classes
 
 Recommended split:
 
@@ -166,11 +172,11 @@ It gives the host a contract. The host still decides how to integrate it.
 
 ## 中文
 
-**面向 AI agent 的记忆治理内核。它不是 Dreaming 的替代品，而是 Dreaming 的补完层。**
+**面向 AI agent 的记忆治理内核。现在已和 OpenClaw Dreaming 重新对齐边界。**
 
-`memory-governor` 适合已经出现多层记忆、多种写记忆 skill、或者可选 adapter 越来越多的宿主系统。它提供一套统一 contract，用来判断什么值得记、应该进入哪一层、什么时候保持短期、什么时候可以被硬化成长期规则。
+`memory-governor` 适合已经出现多层记忆、多种写记忆 skill、或者可选 adapter 越来越多的宿主系统。它本来就在解决记忆治理问题：什么值得记、应该进入哪一层、什么时候保持短期、什么时候可以被硬化成长期规则。
 
-OpenClaw Dreaming 很适合做短期信号到长期记忆的后台巩固。`memory-governor` 负责旁边那个缺口：明确纠错的候选层、记忆路由、adapter 边界、人工升格边界。
+OpenClaw 4.5 更新里的 Dreaming 补上了一个重要能力：从短期信号到长期记忆的后台巩固。所以这次更新不是因为 Dreaming 才开始做 `memory-governor`，而是把已有的治理内核和 Dreaming 重新对齐边界，避免两者重复或冲突。
 
 一句话：
 
@@ -218,9 +224,15 @@ OpenClaw Dreaming 很适合做短期信号到长期记忆的后台巩固。`memo
 
 这样治理内核就不会被某个插件、目录结构或宿主实现绑死。
 
-## 和 Dreaming 的关系
+## 和 Dreaming 的边界对齐
 
-`memory-governor` 不应该和 Dreaming 竞争。
+`memory-governor` 不是因为 Dreaming 才出现的。它原本就是为复杂宿主做记忆捕获、路由、候选层和 hardening 治理。
+
+Dreaming 出现后，需要重新明确边界：
+
+- `daily_memory -> long_term_memory` 优先交给 Dreaming
+- 显式纠错候选层仍由 `learning_candidates` 承接
+- `DREAMS.md` 和 `memory/.dreams/` 不应被建模成普通 memory target class
 
 推荐分工：
 

@@ -57,9 +57,11 @@ class ContractDocsTests(unittest.TestCase):
 
     def test_readme_homepage_positioning_includes_learning_candidates(self) -> None:
         content = read(REPO_ROOT / "README.md")
-        self.assertIn("Complements OpenClaw Dreaming instead of replacing it", content)
+        self.assertIn("Now aligned with OpenClaw Dreaming", content)
+        self.assertIn("was built to give those systems one shared contract", content)
         self.assertIn("`memory type -> target class -> adapter / fallback`", content)
         self.assertIn("`learning_candidates` layer for explicit corrections", content)
+        self.assertIn("`memory-governor` 不是因为 Dreaming 才出现的", content)
         self.assertIn("Dreaming 负责后台巩固", content)
 
     def test_checker_and_validator_support_learning_candidates(self) -> None:
