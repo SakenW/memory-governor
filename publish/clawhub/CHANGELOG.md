@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.2.10 - 2026-05-28
+
 ### Changed
 
 - README now explains how `memory-governor` should coexist with Active Memory and Memory Wiki in newer OpenClaw builds
