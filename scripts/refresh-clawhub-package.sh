@@ -25,12 +25,13 @@ copy_path "LICENSE"
 copy_path "CHANGELOG.md"
 copy_path "references"
 copy_path "assets"
+copy_path "memory_governor"
 copy_path "scripts/bootstrap-generic-host.sh"
 copy_path "scripts/check-memory-host.py"
 copy_path "scripts/review-learning-candidates.py"
 copy_path "scripts/validate-memory-frontmatter.py"
 copy_path "examples/generic-host"
 
-rm -rf "$PUBLISH_DIR/scripts/__pycache__"
+find "$PUBLISH_DIR" -type d -name "__pycache__" -prune -exec rm -rf {} +
 
 printf 'Refreshed ClawHub package at %s\n' "$PUBLISH_DIR"

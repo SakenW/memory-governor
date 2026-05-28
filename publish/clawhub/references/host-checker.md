@@ -87,6 +87,7 @@ manifest 格式见：
 
 - `AGENTS.md`
 - `memory/` directory
+- `learning_candidates` 落点
 - `reusable_lessons` 落点
 - `proactive_state` 落点
 - `working_buffer` 落点

@@ -1,16 +1,18 @@
 # Memory Governor
 
-**Memory governance for AI agents. Now aligned with OpenClaw Dreaming.**
+**Memory governance for AI agents. Now aligned with OpenClaw Dreaming, Active Memory, and Memory Wiki.**
 
 Languages: **English** | [中文](#中文)
 
 `memory-governor` is a governance kernel for hosts that already have multiple memory layers, memory-writing skills, or optional adapters. It was built to give those systems one shared contract for deciding what should be remembered, where it should go, when it should stay temporary, and when it is safe to harden into durable guidance.
 
-With OpenClaw 4.5, Dreaming now covers an important part of the broader memory problem: background consolidation from short-term signals into long-term memory. This release keeps `memory-governor` focused on the governance layer it was already designed for, while aligning its boundaries with Dreaming so the two do not compete.
+With OpenClaw 4.5 and the follow-up April 2026 memory updates, OpenClaw core now covers more of the runtime memory stack: Dreaming for background consolidation, Active Memory for pre-reply recall, and Memory Wiki for compiled knowledge views. This release keeps `memory-governor` focused on the governance layer it was already designed for, while aligning its boundaries with those runtime systems so they do not compete.
 
 In short:
 
 - Dreaming handles background consolidation.
+- Active Memory handles runtime recall before replies.
+- Memory Wiki handles compiled wiki-style views, provenance, and shared search surfaces.
 - `memory-governor` handles capture rules, target classes, correction staging, and hardening boundaries.
 
 ## Why Install It
@@ -76,6 +78,58 @@ Recommended split:
 Do not model `DREAMS.md` or `memory/.dreams/` as normal memory target classes. Treat them as Dreaming-owned artifacts.
 
 See [dreaming-integration.md](references/dreaming-integration.md).
+
+## Alignment with Active Memory and Memory Wiki
+
+Recent OpenClaw updates make the runtime boundary clearer:
+
+- Active Memory is the runtime recall layer.
+- Memory Wiki is a compiled knowledge layer built from memory artifacts.
+- `memory-governor` should stay upstream of both.
+
+Recommended interpretation:
+
+- `memory-governor` decides what kind of memory something is and whether it should harden at all
+- OpenClaw memory plugins decide runtime recall and promotion behavior
+- Memory Wiki compiles durable knowledge views from existing memory, claims, and provenance trails
+
+Do **not** treat wiki page types or vault folders as new target classes.
+
+Examples of things that should remain adapter details, not governance primitives:
+
+- `WIKI.md`
+- `entities/`
+- `concepts/`
+- `syntheses/`
+- wiki-native digests or claim indexes
+
+Those are useful compiled outputs, but they are not replacements for:
+
+- `long_term_memory`
+- `learning_candidates`
+- `reusable_lessons`
+- `system_rules`
+- `tool_rules`
+
+Practical rule:
+
+- canonical durable truth still lives in the host's memory contract
+- wiki outputs should be treated as downstream compiled views, recall aids, and provenance-friendly summaries
+
+## Implications for OpenClaw Hosts
+
+If your host enables newer OpenClaw memory features:
+
+- keep startup reads minimal and let Active Memory do the heavy recall work
+- keep `working_buffer` and current-task `proactive_state` compact, because session pruning and automatic memory flush increase the value of short, high-signal recovery state
+- keep explicit corrections out of wiki compilation inputs until they have cleared candidate review
+- keep `learning_candidates -> reusable_lessons -> system_rules / tool_rules` as a manual hardening path even if the runtime stack becomes more capable
+
+This prevents three common mistakes:
+
+- reading too many layers manually even though Active Memory already performs recall
+- treating compiled wiki pages as if they were canonical governance sources
+- allowing one-off corrections to surface everywhere before they are proven durable
 
 ## Readiness Model
 
@@ -172,15 +226,17 @@ It gives the host a contract. The host still decides how to integrate it.
 
 ## 中文
 
-**面向 AI agent 的记忆治理内核。现在已和 OpenClaw Dreaming 重新对齐边界。**
+**面向 AI agent 的记忆治理内核。现在已和 OpenClaw Dreaming、Active Memory、Memory Wiki 重新对齐边界。**
 
 `memory-governor` 适合已经出现多层记忆、多种写记忆 skill、或者可选 adapter 越来越多的宿主系统。它本来就在解决记忆治理问题：什么值得记、应该进入哪一层、什么时候保持短期、什么时候可以被硬化成长期规则。
 
-OpenClaw 4.5 更新里的 Dreaming 补上了一个重要能力：从短期信号到长期记忆的后台巩固。所以这次更新不是因为 Dreaming 才开始做 `memory-governor`，而是把已有的治理内核和 Dreaming 重新对齐边界，避免两者重复或冲突。
+OpenClaw 4.5 以及 2026 年 4 月后续更新，把 runtime memory stack 补得更完整了：Dreaming 负责后台巩固，Active Memory 负责回复前 recall，Memory Wiki 负责把已有记忆编译成 wiki 视图和 provenance 友好的知识层。所以这次更新不是因为这些能力才开始做 `memory-governor`，而是把已有的治理内核和它们重新对齐边界，避免重复或冲突。
 
 一句话：
 
 - Dreaming 负责后台巩固。
+- Active Memory 负责运行时 recall。
+- Memory Wiki 负责编译后的 wiki 视图、provenance 和共享搜索面。
 - `memory-governor` 负责捕获规则、target classes、纠错候选层和 hardening 边界。
 
 ## 为什么安装

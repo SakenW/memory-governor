@@ -39,6 +39,7 @@ Typical mappings:
 
 - `long_term_memory` -> `MEMORY.md`
 - `daily_memory` -> `memory/YYYY-MM-DD.md`
+- `learning_candidates` -> `~/self-improving/candidates.md` if installed, otherwise `workspace/memory/learning-candidates.md`
 - `reusable_lessons` -> `~/self-improving/...` if installed, otherwise `workspace/memory/reusable-lessons.md`
 - `proactive_state` -> `~/proactivity/memory.md` + `~/proactivity/session-state.md` if installed, otherwise `workspace/memory/proactive-state.md`
 - `working_buffer` -> `~/proactivity/memory/working-buffer.md` if installed, otherwise `workspace/memory/working-buffer.md`
@@ -51,6 +52,8 @@ Current note:
 - existing external adapters such as `~/proactivity/...` may still be legacy human-readable files rather than schema-frontmatter targets
 - installing the skill into OpenClaw should not silently rewrite `AGENTS.md` or other skills; package-external integration should remain explicit
 - if OpenClaw Dreaming is enabled, treat it as an optional consolidation engine for `daily_memory -> long_term_memory`, not as a new target class or a replacement for `learning_candidates`
+- if Active Memory is enabled, keep manual startup reads minimal and use `memory-governor` mainly for routing, recovery, and hardening decisions
+- if Memory Wiki is enabled, treat wiki pages and digests as compiled views rather than new target classes
 
 ## Selection Rule
 

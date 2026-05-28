@@ -116,6 +116,50 @@
 推荐：
 
 - 先读最小必要集合
+- 如果宿主启用了 Active Memory，优先把它当成默认 recall 入口，而不是手动展开更多层
 - 只有在恢复风险高时再扩展读取
 - 不要默认把 `working_buffer` 当成第一入口
 - 不要把 `DREAMS.md` 当作普通启动记忆来加载
+
+## Active Memory / Memory Wiki Notes
+
+### Active Memory
+
+如果宿主启用了 Active Memory：
+
+- 它应承担回复前的 runtime recall
+- 手动 read order 更适合恢复、调试、审计和边界判断
+- 不要因为有更多 memory surfaces 就把默认启动读取变重
+
+一句话：
+
+- `read order` 是治理视角下的最小必要读取建议
+- Active Memory 是运行时自动 recall 机制
+
+### Memory Wiki
+
+如果宿主启用了 Memory Wiki：
+
+- 把 wiki 页面、digest、claims/provenance 视为下游编译结果
+- 优先在“需要跨实体关系、证据链、共享搜索”时查询 wiki
+- 不要把 wiki 页面当成默认启动的 canonical truth
+
+默认优先级仍然是：
+
+- `system_rules` / `tool_rules`
+- `long_term_memory`
+- proven `reusable_lessons`
+- current task state
+
+而不是：
+
+- `WIKI.md`
+- entity pages
+- synthesis pages
+
+wiki 更适合：
+
+- research-style recall
+- evidence tracing
+- contradiction review
+- human-readable compiled summaries

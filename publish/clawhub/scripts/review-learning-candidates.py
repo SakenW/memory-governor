@@ -221,9 +221,13 @@ def main() -> int:
         default=7,
         help="warn when updated_at is older than this many days (default: 7)",
     )
+    parser.add_argument(
+        "--now",
+        help="override current UTC time for deterministic checks, e.g. 2026-04-06T00:00:00Z",
+    )
     args = parser.parse_args()
 
-    now = datetime.now(UTC)
+    now = parse_iso8601(args.now) if args.now else datetime.now(UTC)
     overall_ok = True
 
     for raw_path in args.paths:

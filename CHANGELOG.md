@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- README now explains how `memory-governor` should coexist with Active Memory and Memory Wiki in newer OpenClaw builds
+- read-order guidance now distinguishes governance-time minimal reads from runtime recall handled by Active Memory
+- installation guidance now calls out Memory Wiki as a compiled knowledge surface rather than a new target class
+- OpenClaw integration notes now emphasize compact recovery state for session pruning / automatic memory flush environments
+- OpenClaw profile validation now checks the `learning_candidates` adapter or fallback so explicit corrections do not bypass review
+- candidate review tests now use a fixed clock to avoid date-driven failures
+
 ## 0.2.9 - 2026-04-07
 
 ### Added

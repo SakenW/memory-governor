@@ -14,8 +14,23 @@ from dataclasses import dataclass
 
 
 SCRIPT_DIR = pathlib.Path(__file__).resolve().parent
+ROOT_DIR = SCRIPT_DIR.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 VALIDATOR_PATH = SCRIPT_DIR / "validate-memory-frontmatter.py"
 DEFAULT_MANIFEST_NAME = "memory-governor-host.toml"
+from memory_governor.contract.capabilities import CAPABILITY_FAMILIES
+from memory_governor.contract.diagnosis_registry import DIAGNOSIS_TYPES
+from memory_governor.audit import (
+    AuthorizationPolicy,
+    CapabilityDeclaration,
+    DiagnosisConfig,
+    parse_capability_declaration,
+    reconcile_capability_contract,
+    render_summary,
+)
+
 MANIFEST_TARGETS = {
     "long_term_memory",
     "daily_memory",
@@ -39,6 +54,13 @@ STRUCTURED_TARGETS = {
 class CheckResult:
     level: str
     message: str
+
+
+@dataclass
+class WriterContractInspection:
+    path: pathlib.Path
+    families: list[str] | None
+    results: list[CheckResult]
 
 
 def load_validator():
@@ -124,22 +146,39 @@ def check_host_entry_contract(root: pathlib.Path, path: pathlib.Path) -> CheckRe
     return CheckResult("OK", f"integration host entry: {rel(path, root)}")
 
 
-def check_writer_contract(root: pathlib.Path, path: pathlib.Path) -> CheckResult:
+def inspect_writer_contract(root: pathlib.Path, path: pathlib.Path) -> WriterContractInspection:
+    results: list[CheckResult] = []
     text = read_text_if_exists(path)
     if text is None:
-        return CheckResult("ERROR", f"integration writer contract: missing {rel(path, root)}")
+        results.append(CheckResult("ERROR", f"integration writer contract: missing {rel(path, root)}"))
+        return WriterContractInspection(path=path, families=None, results=results)
 
     lowered = text.lower()
     if "## memory contract" not in lowered:
-        return CheckResult("ERROR", f"integration writer contract: {rel(path, root)} missing '## Memory Contract'")
+        results.append(CheckResult("ERROR", f"integration writer contract: {rel(path, root)} missing '## Memory Contract'"))
+        return WriterContractInspection(path=path, families=None, results=results)
     if "memory-governor" not in lowered:
-        return CheckResult("ERROR", f"integration writer contract: {rel(path, root)} does not mention memory-governor")
+        results.append(CheckResult("ERROR", f"integration writer contract: {rel(path, root)} does not mention memory-governor"))
+        return WriterContractInspection(path=path, families=None, results=results)
 
-    return CheckResult("OK", f"integration writer contract: {rel(path, root)}")
+    results.append(CheckResult("OK", f"integration writer contract: {rel(path, root)}"))
+
+    families, error = parse_capability_declaration(text)
+    if error is not None:
+        results.append(CheckResult("ERROR", f"integration writer contract: {rel(path, root)} {error}"))
+        return WriterContractInspection(path=path, families=None, results=results)
+
+    if families is None:
+        results.append(CheckResult("WARN", f"integration writer contract: {rel(path, root)} missing machine-readable capability declaration"))
+        return WriterContractInspection(path=path, families=None, results=results)
+
+    results.append(CheckResult("OK", f"integration writer capabilities: {rel(path, root)} -> {', '.join(families)}"))
+    return WriterContractInspection(path=path, families=families, results=results)
 
 
-def check_integration_paths(root: pathlib.Path, integration: dict) -> list[CheckResult]:
+def check_integration_paths(root: pathlib.Path, integration: dict) -> tuple[list[CheckResult], list[WriterContractInspection]]:
     results: list[CheckResult] = []
+    writer_inspections: list[WriterContractInspection] = []
 
     host_entry_paths, host_entry_error = validate_manifest_paths_array(integration, "host_entry_paths")
     if host_entry_error is not None:
@@ -153,9 +192,9 @@ def check_integration_paths(root: pathlib.Path, integration: dict) -> list[Check
         results.append(CheckResult("ERROR", f"integration: {writer_contract_error}"))
     elif writer_contract_paths is not None:
         for raw_path in writer_contract_paths:
-            results.append(check_writer_contract(root, resolve_manifest_path(root, raw_path)))
+            writer_inspections.append(inspect_writer_contract(root, resolve_manifest_path(root, raw_path)))
 
-    return results
+    return results, writer_inspections
 
 
 def find_manifest(root: pathlib.Path) -> pathlib.Path | None:
@@ -224,8 +263,107 @@ def check_manifest(root: pathlib.Path, manifest_path: pathlib.Path) -> list[Chec
     if integration is not None:
         if not isinstance(integration, dict):
             results.append(CheckResult("ERROR", "manifest: [integration] must be a table if present"))
+            writer_inspections: list[WriterContractInspection] = []
         else:
-            results.extend(check_integration_paths(root, integration))
+            integration_results, writer_inspections = check_integration_paths(root, integration)
+            results.extend(integration_results)
+    else:
+        writer_inspections = []
+
+    capabilities = manifest.get("capabilities")
+    declared_families: list[str] = []
+    if capabilities is not None:
+        if not isinstance(capabilities, dict):
+            results.append(CheckResult("ERROR", "manifest: [capabilities] must be a table if present"))
+        else:
+            raw_declared_families = capabilities.get("families")
+            if raw_declared_families is not None:
+                if not isinstance(raw_declared_families, list) or not all(isinstance(item, str) for item in raw_declared_families):
+                    results.append(CheckResult("ERROR", "manifest capabilities: families must be a string array if present"))
+                else:
+                    declared_families = raw_declared_families
+                    unknown_families = sorted(set(declared_families) - set(CAPABILITY_FAMILIES))
+                    for family in unknown_families:
+                        results.append(CheckResult("ERROR", f"manifest capabilities: unknown family {family!r}"))
+                    if not unknown_families:
+                        results.append(CheckResult("OK", f"manifest capabilities: {', '.join(declared_families)}"))
+
+    authorization = manifest.get("authorization")
+    allowed_capabilities: list[str] = []
+    if authorization is not None:
+        if not isinstance(authorization, dict):
+            results.append(CheckResult("ERROR", "manifest: [authorization] must be a table if present"))
+        else:
+            raw_allowed_capabilities = authorization.get("allowed_capabilities")
+            if raw_allowed_capabilities is not None:
+                if not isinstance(raw_allowed_capabilities, list) or not all(isinstance(item, str) for item in raw_allowed_capabilities):
+                    results.append(CheckResult("ERROR", "manifest authorization: allowed_capabilities must be a string array if present"))
+                else:
+                    allowed_capabilities = raw_allowed_capabilities
+                    unknown_allowed = sorted(set(allowed_capabilities) - set(CAPABILITY_FAMILIES))
+                    for family in unknown_allowed:
+                        results.append(CheckResult("ERROR", f"manifest authorization: unknown capability {family!r}"))
+                    if not unknown_allowed:
+                        results.append(CheckResult("OK", f"manifest authorization: {', '.join(allowed_capabilities)}"))
+
+    diagnosis = manifest.get("diagnosis")
+    enabled_types: list[str] = []
+    if diagnosis is not None:
+        if not isinstance(diagnosis, dict):
+            results.append(CheckResult("ERROR", "manifest: [diagnosis] must be a table if present"))
+        else:
+            raw_enabled_types = diagnosis.get("enabled_types")
+            if raw_enabled_types is not None:
+                if not isinstance(raw_enabled_types, list) or not all(isinstance(item, str) for item in raw_enabled_types):
+                    results.append(CheckResult("ERROR", "manifest diagnosis: enabled_types must be a string array if present"))
+                else:
+                    enabled_types = raw_enabled_types
+                    unknown_types = sorted(set(enabled_types) - set(DIAGNOSIS_TYPES))
+                    for diagnosis_type in unknown_types:
+                        results.append(CheckResult("ERROR", f"manifest diagnosis: unknown type {diagnosis_type!r}"))
+                    if not unknown_types:
+                        results.append(CheckResult("OK", f"manifest diagnosis types: {', '.join(enabled_types)}"))
+
+    effective_declarations: list[CapabilityDeclaration] = []
+    for inspection in writer_inspections:
+        results.extend(inspection.results)
+        if inspection.families:
+            effective_declarations.append(
+                CapabilityDeclaration(
+                    families=inspection.families,
+                    source_artifact=rel(inspection.path, root) + " [capabilities]",
+                )
+            )
+
+    if declared_families:
+        effective_declarations.append(
+            CapabilityDeclaration(
+                families=declared_families,
+                source_artifact=rel(manifest_path, root) + " [capabilities]",
+            )
+        )
+
+    if not effective_declarations and allowed_capabilities:
+        effective_declarations.append(
+            CapabilityDeclaration(
+                families=[],
+                source_artifact="missing skill capability declaration",
+            )
+        )
+
+    for declaration in effective_declarations:
+        diagnostics = reconcile_capability_contract(
+            declaration,
+            AuthorizationPolicy(
+                allowed_capabilities=allowed_capabilities,
+                source_artifact=rel(manifest_path, root) + " [authorization]",
+            ),
+            DiagnosisConfig(enabled_types=enabled_types),
+        )
+        for diagnostic in diagnostics:
+            for line_number, line in enumerate(render_summary(diagnostic)):
+                level = diagnostic.severity if line_number == 0 else "OK"
+                results.append(CheckResult(level, f"diagnostic: {line}"))
 
     targets = manifest.get("targets")
     if not isinstance(targets, dict):
@@ -357,6 +495,12 @@ def check_openclaw(root: pathlib.Path) -> list[CheckResult]:
         results.append(CheckResult("OK", f"reusable_lessons adapter: external self-improving detected at {self_improving}"))
     else:
         results.extend(check_structured(root, root / "memory" / "reusable-lessons.md", "reusable_lessons fallback"))
+
+    self_improving_candidates = home / "self-improving" / "candidates.md"
+    if self_improving_candidates.exists():
+        results.append(CheckResult("OK", f"learning_candidates adapter: external self-improving candidates detected at {self_improving_candidates}"))
+    else:
+        results.extend(check_structured(root, root / "memory" / "learning-candidates.md", "learning_candidates fallback"))
 
     proactivity_memory = home / "proactivity" / "memory.md"
     proactivity_session = home / "proactivity" / "session-state.md"

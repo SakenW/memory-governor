@@ -21,6 +21,13 @@ This skill follows `memory-governor`.
 - reusable lesson
 - recovery hint
 
+### Capability Declaration
+
+```toml
+[capabilities]
+families = ["writer"]
+```
+
 ### Target Class Routing
 
 - key progress update -> `daily_memory`

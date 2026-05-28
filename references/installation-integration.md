@@ -106,6 +106,13 @@
 - `DREAMS.md` / `memory/.dreams/` 不是新的 target class
 - 不应让 Dreaming 和人工 daily promotion 同时成为默认 authority
 
+如果宿主后续启用 Active Memory 或 Memory Wiki，还应额外遵守：
+
+- Active Memory 是 runtime recall 层，不是新的 target class
+- Memory Wiki 是 compiled knowledge / wiki surface，不是 canonical durable memory
+- 不应把 wiki vault 结构反向提升成治理层 target classes
+- 不应因为 runtime recall 变强，就跳过 `learning_candidates` 的显式纠错分层
+
 这意味着：
 
 - 你可以用它来判断“什么该记”
@@ -188,6 +195,27 @@ generic package 自带 fallback 模板：
 - 仍可安装 skill
 - 但某些 target classes 会缺少默认本地落点
 
+### 4. OpenClaw runtime memory features
+
+如果宿主是 OpenClaw，并且已经启用：
+
+- Dreaming
+- Active Memory
+- Memory Wiki
+- session pruning / automatic memory flush
+
+推荐补一层运行时说明，哪怕只是 host note：
+
+- Dreaming 负责 `daily_memory -> long_term_memory`
+- Active Memory 负责 runtime recall
+- Memory Wiki 负责编译后的 wiki / provenance / search surface
+- `memory-governor` 继续负责 capture rules、candidate staging、manual hardening boundaries
+
+不补会怎样：
+
+- 宿主仍可运行
+- 但后续很容易把 runtime surface 当成治理层，把编译层当成 canonical truth
+
 ## 哪些不建议直接改
 
 默认不建议因为安装本 skill 而直接改：
@@ -218,6 +246,40 @@ generic package 自带 fallback 模板：
 - 可以逐步接 skill
 
 完成这一步后，通常仍是 `Installed` 向 `Integrated` 过渡中的状态。
+
+## OpenClaw Optimization Notes
+
+对于新版 OpenClaw，建议宿主额外做三件事：
+
+1. 保持 `working_buffer` 和当前任务 `proactive_state` 极短、可恢复、可替换
+
+原因：
+
+- session pruning 和 automatic memory flush 会放大短小高信号状态的价值
+
+2. 在 host note 或 writer-skill contract 里明确：
+
+- one-off explicit corrections -> `learning_candidates`
+- proven reusable guidance -> `reusable_lessons`
+- wiki compilation inputs should prefer proven layers over candidate layers
+
+原因：
+
+- 避免候选层过早被编译、检索、传播
+
+如果使用 OpenClaw reference profile，`learning_candidates` 应显式落到：
+
+- `~/self-improving/candidates.md`，如果该 adapter 存在
+- 否则使用本地 fallback，例如 `memory/learning-candidates.md`
+
+3. 明确 runtime query strategy：
+
+- 普通任务恢复先靠 Active Memory + minimal read order
+- 需要实体关系、证据链、共享知识导航时再用 Memory Wiki
+
+原因：
+
+- 避免每次任务都把所有 memory surfaces 当成同级入口
 
 这一步仍然默认是手动或显式触发的，不是安装时自动执行。
 

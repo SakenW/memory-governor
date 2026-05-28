@@ -60,6 +60,22 @@ class HostCheckerTests(unittest.TestCase):
         self.assertIn("STATUS: PASS", result.stdout)
         self.assertIn("learning_candidates manifest target", result.stdout)
 
+    def test_capability_audit_emits_structured_diagnostic_summary(self) -> None:
+        result = self.run_checker(HOST_FIXTURES / "capability-audit")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("STATUS: FAIL", result.stdout)
+        self.assertIn("integration writer capabilities: skills/promoting-writer/SKILL.md -> writer, promoter", result.stdout)
+        self.assertIn("diagnostic: ERROR UnauthorizedPromotionPath", result.stdout)
+        self.assertIn("diagnostic: capability_family: promoter", result.stdout)
+        self.assertIn("diagnostic: repair_hints: Explicitly authorize promoter in the host manifest.", result.stdout)
+
+    def test_skill_claim_without_authorization_warns_provisionally(self) -> None:
+        result = self.run_checker(HOST_FIXTURES / "skill-claim-only")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("STATUS: WARN", result.stdout)
+        self.assertIn("integration writer capabilities: skills/example-writer/SKILL.md -> writer", result.stdout)
+        self.assertIn("diagnostic: WARN ProvisionalCapabilityDiagnosis", result.stdout)
+
     def test_missing_primary_and_fallback_fails(self) -> None:
         result = self.run_checker(HOST_FIXTURES / "missing-fallback")
         self.assertNotEqual(result.returncode, 0)

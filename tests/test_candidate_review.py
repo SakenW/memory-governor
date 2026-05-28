@@ -12,22 +12,34 @@ FIXTURES = REPO_ROOT / "tests" / "fixtures" / "validator"
 
 
 class CandidateReviewTests(unittest.TestCase):
-    def run_reviewer(self, *paths: pathlib.Path, stale_days: int = 7) -> subprocess.CompletedProcess[str]:
+    def run_reviewer(
+        self,
+        *paths: pathlib.Path,
+        stale_days: int = 7,
+        now: str | None = None,
+    ) -> subprocess.CompletedProcess[str]:
+        command = [
+            sys.executable,
+            str(REVIEWER),
+            "--stale-days",
+            str(stale_days),
+        ]
+        if now is not None:
+            command.extend(["--now", now])
+        command.extend(str(path) for path in paths)
         return subprocess.run(
-            [
-                sys.executable,
-                str(REVIEWER),
-                "--stale-days",
-                str(stale_days),
-                *[str(path) for path in paths],
-            ],
+            command,
             capture_output=True,
             text=True,
             check=False,
         )
 
     def test_fresh_learning_candidates_file_is_ok(self) -> None:
-        result = self.run_reviewer(FIXTURES / "valid-learning-candidates.md")
+        result = self.run_reviewer(
+            FIXTURES / "valid-learning-candidates.md",
+            stale_days=30,
+            now="2026-04-06T00:00:00Z",
+        )
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("STATUS: OK", result.stdout)
         self.assertIn("candidate_items: 1", result.stdout)

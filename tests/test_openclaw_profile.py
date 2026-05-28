@@ -59,6 +59,7 @@ class OpenClawProfileTests(unittest.TestCase):
             self.create_openclaw_workspace(workspace)
 
             copy_fallback("reusable-lessons.md", workspace / "memory" / "reusable-lessons.md")
+            copy_fallback("learning-candidates.md", workspace / "memory" / "learning-candidates.md")
             copy_fallback("proactive-state.md", workspace / "memory" / "proactive-state.md")
             copy_fallback("working-buffer.md", workspace / "memory" / "working-buffer.md")
 
@@ -67,6 +68,7 @@ class OpenClawProfileTests(unittest.TestCase):
             self.assertIn("PROFILE: openclaw", result.stdout)
             self.assertIn("STATUS: PASS", result.stdout)
             self.assertIn("reusable_lessons fallback", result.stdout)
+            self.assertIn("learning_candidates fallback", result.stdout)
             self.assertIn("proactive_state fallback", result.stdout)
             self.assertIn("working_buffer fallback", result.stdout)
 
@@ -89,6 +91,7 @@ class OpenClawProfileTests(unittest.TestCase):
             self.assertIn("PROFILE: openclaw", result.stdout)
             self.assertIn("STATUS: PASS", result.stdout)
             self.assertIn("external self-improving detected", result.stdout)
+            self.assertIn("external self-improving candidates detected", result.stdout)
             self.assertIn("split proactivity adapter detected", result.stdout)
             self.assertIn("external proactivity buffer detected", result.stdout)
 
@@ -107,6 +110,7 @@ class OpenClawProfileTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("PROFILE: openclaw", result.stdout)
             self.assertIn("STATUS: FAIL", result.stdout)
+            self.assertIn("learning_candidates fallback: missing", result.stdout)
             self.assertIn("proactive_state fallback: missing", result.stdout)
             self.assertIn("working_buffer fallback: missing", result.stdout)
 
@@ -128,6 +132,7 @@ class OpenClawProfileTests(unittest.TestCase):
                 "+++\n\n"
                 "# reusable-lessons.md\n",
             )
+            copy_fallback("learning-candidates.md", workspace / "memory" / "learning-candidates.md")
             copy_fallback("proactive-state.md", workspace / "memory" / "proactive-state.md")
             copy_fallback("working-buffer.md", workspace / "memory" / "working-buffer.md")
 
