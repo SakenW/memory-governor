@@ -103,6 +103,15 @@ class ContractDocsTests(unittest.TestCase):
         self.assertIn("learning_candidates", changelog)
         self.assertIn("compiled-surfaces.md", changelog)
 
+    def test_skill_frontmatter_exposes_version_matching_version_file(self) -> None:
+        skill = read(REPO_ROOT / "SKILL.md")
+        version = read(REPO_ROOT / "VERSION").strip()
+        # ClawHub reads version from frontmatter, not the VERSION file.
+        # The two must stay in sync or ClawHub falls back to content-hash tracking.
+        self.assertIn(f"version: {version}", skill)
+        self.assertIn("slug: memory-governor", skill)
+        self.assertIn("homepage: https://github.com/SakenW/memory-governor", skill)
+
     def test_compiled_surfaces_reference_exists_and_binds_new_official_surfaces(self) -> None:
         path = REPO_ROOT / "references" / "compiled-surfaces.md"
         self.assertTrue(path.exists(), f"missing {path}")

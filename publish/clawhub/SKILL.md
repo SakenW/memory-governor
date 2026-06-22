@@ -1,6 +1,11 @@
 ---
 name: memory-governor
-description: Memory governance kernel for AI agents that complements the OpenClaw 2026.6.x memory stack (Dreaming, Active Memory, Memory Wiki, People Wiki, Skill Workshop / Workboard) with explicit correction staging, target-class routing, compiled-surface boundaries, scope/privacy rules, and safer manual hardening rules.
+slug: memory-governor
+version: 0.3.0
+homepage: https://github.com/SakenW/memory-governor
+description: "Memory governance kernel for AI agents that complements the OpenClaw 2026.6.x memory stack (Dreaming, Active Memory, Memory Wiki, People Wiki, Skill Workshop / Workboard) with explicit correction staging, target-class routing, compiled-surface boundaries, scope/privacy rules, and safer manual hardening rules."
+changelog: "Aligns with OpenClaw 2026.6.x; declares all official compiled surfaces (People Wiki, Memory Wiki claims, Memory Palace, Imported Insights, Provenance) downstream of the contract. Adds references/compiled-surfaces.md plus scope/privacy, multi-agent writer, and Skill Workshop versioning rules. 9 target classes unchanged."
+metadata: {"clawdbot":{"emoji":"🧭","requires":{"bins":[]},"os":["linux","darwin","win32"],"configPaths":["./memory-governor-host.toml"],"configPaths.optional":["./MEMORY.md","./AGENTS.md","./TOOLS.md","./SOUL.md","./memory/"]}}
 ---
 
 # Memory Governor
