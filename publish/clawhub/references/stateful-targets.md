@@ -102,9 +102,34 @@
 
 不要把“谁先写进去”当成权威。
 
+## Multi-Agent Writer Rule
+
+OpenClaw 2026.6.1 的 Workboard 让多个 agent 协作。多 agent 共享记忆时，写入治理要从 skill 级再往上抬一层到 agent 级。
+
+默认规则：
+
+1. 如果多个 agent 会写同一个 stateful target，host 应为该 target 指定一个 canonical agent writer
+2. 如果无法指定，每条写入必须带 `owner` / `source_agent`，而不只是 `source_skill`
+3. 跨 agent 的当前真相冲突，默认以 newest valid update 为准，除非 host 声明了更强的 precedence
+4. 协作型 agent 之间不应各自把对方还没确认的中间状态固化成 canonical
+
+per-agent namespace 建议：
+
+- 如果宿主支持，给每个 agent 一个独立的 `working_buffer` 和当前任务 `proactive_state` 命名空间
+- `long_term_memory`、`reusable_lessons`、`system_rules` 这类共享层应保持单一 canonical 副本，由 canonical writer 维护
+- 不要让每个 agent 各自维护一份全局规则副本，否则会产生规则 drift
+
+一句话：
+
+- skill 级 multi-writer 解决“多个 skill 抢写”
+- agent 级 multi-writer 解决“多个协作 agent 抢写 + 各自固化中间态”
+- 两层都应有 canonical writer 或 `owner` 字段，不能只靠“谁先写”
+
 ## Anti-Patterns
 
 - 把 `proactive_state` 写成操作日志
 - 把 `working_buffer` 写成永久草稿箱
 - 多个 skill 同时 append 当前状态，没人负责覆盖旧值
 - 没有时间戳也没有 source，就宣称这份状态是“当前真相”
+- 多个协作 agent 各自把未确认的中间状态固化成 canonical task state
+- 每个 agent 各持一份全局规则副本，导致 `system_rules` 长期 drift

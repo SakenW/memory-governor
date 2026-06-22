@@ -121,7 +121,11 @@
 - 不要默认把 `working_buffer` 当成第一入口
 - 不要把 `DREAMS.md` 当作普通启动记忆来加载
 
-## Active Memory / Memory Wiki Notes
+## Runtime / Compiled Surfaces
+
+完整的“哪些官方产物不是 target class”清单见 [compiled-surfaces.md](compiled-surfaces.md)。
+
+这里只列读取时的判断。
 
 ### Active Memory
 
@@ -154,8 +158,10 @@
 而不是：
 
 - `WIKI.md`
-- entity pages
+- entity pages / Person Cards / Relationship Graphs（People Wiki）
 - synthesis pages
+- Memory Palace / Imported Insights 等 UI 面
+- Obsidian Vault 产物（`00_Index/`、`03_Memories/`、`04_Claims/` 等）
 
 wiki 更适合：
 
@@ -163,3 +169,21 @@ wiki 更适合：
 - evidence tracing
 - contradiction review
 - human-readable compiled summaries
+
+### People Wiki / Claim / Provenance
+
+这些是 entity-compiled 或 claim-compiled 表面，不是 target class。
+
+读取时：
+
+- 需要跨人物关系、聚合视图时查询 People Wiki
+- 需要证据链、矛盾追踪时查询 Claim / Provenance
+- 不要把 Person Card 或 Claim 当成 capture 入口，也不要当成默认启动记忆
+
+## Official Behavior Notes
+
+这些官方行为正好印证上面的边界，可在解释“为什么不把它当 canonical”时引用：
+
+- 官方会过滤 stale REM recall previews，说明 `DREAMS.md` 本就不是 canonical truth
+- 官方在 recall timeout 时返回 partial recall，这反过来要求 `working_buffer` 保持短小、高信号、可恢复
+- Memory Wiki 的 state 已迁到 SQLite，因此 host checker 不应假设 wiki 产物是纯文件树

@@ -1,6 +1,6 @@
 ---
 name: memory-governor
-description: Memory governance kernel for AI agents that complements OpenClaw Dreaming with explicit correction staging, target-class routing, adapter boundaries, and safer manual hardening rules.
+description: Memory governance kernel for AI agents that complements the OpenClaw 2026.6.x memory stack (Dreaming, Active Memory, Memory Wiki, People Wiki, Skill Workshop / Workboard) with explicit correction staging, target-class routing, compiled-surface boundaries, scope/privacy rules, and safer manual hardening rules.
 ---
 
 # Memory Governor
@@ -31,6 +31,7 @@ If this is your first time opening `memory-governor`, start here:
 3. `references/promotion-rules.md`
 4. `references/exclusions.md`
 5. `references/adapters.md`
+6. `references/compiled-surfaces.md`
 
 The remaining reference files are optional on first read.
 
@@ -131,6 +132,27 @@ See [references/retention-rules.md](references/retention-rules.md) for lifecycle
 
 See [references/read-order.md](references/read-order.md) for recovery-time read order.
 
+## Compiled Surfaces
+
+OpenClaw keeps adding runtime and compiled memory surfaces: Dreaming artifacts, Active Memory, Memory Wiki, People Wiki, Claim/Evidence, Memory Palace, Imported Insights, and Provenance Views.
+
+None of them is a memory target class. They are downstream of the governance contract.
+
+In short:
+
+- capture into target classes first
+- let official engines compile, recall, navigate, and index downstream
+- canonical durable truth still lives in the target classes
+
+Two governance rules that the contract adds on top:
+
+- imported content (for example Imported Insights) is unverified and should stage through `learning_candidates`, not jump to canonical truth
+- scoped memories (project, chat, agent) should record scope at capture time, so a compiled surface cannot widen them beyond what Active Memory Filters allow
+
+See [references/compiled-surfaces.md](references/compiled-surfaces.md) for the full surface inventory and the capture-vs-compile rule.
+
+See [references/dreaming-integration.md](references/dreaming-integration.md) for the Dreaming-specific boundary.
+
 ## Skill Integration
 
 When another skill integrates with this kernel:
@@ -169,6 +191,10 @@ See [references/host-profiles.md](references/host-profiles.md) for host differen
 - do not force every skill into the same implementation style
 - do not invent a new primary memory directory unless the governance layer explicitly approves it
 - do not write secrets, raw long logs, or short-lived noise into memory
+- do not model Dreaming, Memory Wiki, People Wiki, Memory Palace, or Imported Insights as target classes
+- do not let skills write entity profiles directly into a `people/` surface instead of capturing into target classes
+- do not treat imported or cross-platform content as already-verified long-term memory
+- do not let a compiled surface widen the scope of a captured memory beyond its intended boundary
 
 ## Phase Boundary
 

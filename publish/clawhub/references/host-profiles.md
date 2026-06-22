@@ -54,6 +54,11 @@ Current note:
 - if OpenClaw Dreaming is enabled, treat it as an optional consolidation engine for `daily_memory -> long_term_memory`, not as a new target class or a replacement for `learning_candidates`
 - if Active Memory is enabled, keep manual startup reads minimal and use `memory-governor` mainly for routing, recovery, and hardening decisions
 - if Memory Wiki is enabled, treat wiki pages and digests as compiled views rather than new target classes
+- if People Wiki (2026.4.29+) is enabled, treat Person Cards and Relationship Graphs as entity-compiled views; capture entity facts into `long_term_memory` / `project_facts` / `learning_candidates`, never directly into a `people/` surface
+- if Active Memory Filters (`allowedChatIds` / `deniedChatIds`) are in use, record scope on scoped target class entries at capture time so compiled surfaces do not widen them
+- if Imported Insights / Memory Palace are enabled, treat imported content as unverified and stage it through `learning_candidates` rather than canonical truth
+- if Workboard / multi-agent coordination (2026.6.1+) is enabled, follow the Multi-Agent Writer Rule in `stateful-targets.md` so coordinated agents do not each harden unconfirmed intermediate state
+- the full list of official compiled / runtime surfaces that are NOT target classes lives in `compiled-surfaces.md`
 
 ## Selection Rule
 

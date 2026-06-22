@@ -47,6 +47,20 @@ Interpretation:
 
 Skills should not write directly to either path unless they are explicitly implementing Dreaming infrastructure.
 
+### Other Compiled / Runtime Surfaces
+
+Dreaming is not the only official surface that is downstream of the memory contract. Newer OpenClaw builds add more, and the same boundary applies to all of them:
+
+- Active Memory: runtime recall layer, not a target class
+- Memory Wiki, Claim / Evidence artifacts, Contradiction / Staleness reports: compiled knowledge views
+- People Wiki, Person Cards, Relationship Graphs: entity-compiled views
+- Memory Palace, Imported Insights: UI / navigation surfaces
+- Provenance Views: a property of compiled claims, not a target class
+
+None of these is a capture layer. The full list and the capture-vs-compile rule live in [compiled-surfaces.md](compiled-surfaces.md).
+
+A privacy note specific to recall: Active Memory Filters (such as `allowedChatIds` / `deniedChatIds`) control what may be recalled where. That is a recall-time control. Capture-time governance still needs to record scope on the target class entry, otherwise a compiled surface can widen a scoped memory into a global view.
+
 ### Canonical Durable Memory
 
 Dreaming may help decide what enters long-term memory, but the canonical durable memory layer remains:

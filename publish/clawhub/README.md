@@ -1,19 +1,21 @@
 # Memory Governor
 
-**Memory governance for AI agents. Now aligned with OpenClaw Dreaming, Active Memory, and Memory Wiki.**
+**Memory governance for AI agents. Aligned with the OpenClaw 2026.6.x memory stack: Dreaming, Active Memory, Memory Wiki, People Wiki, and the Skill Workshop / Workboard era.**
 
 Languages: **English** | [中文](#中文)
 
 `memory-governor` is a governance kernel for hosts that already have multiple memory layers, memory-writing skills, or optional adapters. It was built to give those systems one shared contract for deciding what should be remembered, where it should go, when it should stay temporary, and when it is safe to harden into durable guidance.
 
-With OpenClaw 4.5 and the follow-up April 2026 memory updates, OpenClaw core now covers more of the runtime memory stack: Dreaming for background consolidation, Active Memory for pre-reply recall, and Memory Wiki for compiled knowledge views. This release keeps `memory-governor` focused on the governance layer it was already designed for, while aligning its boundaries with those runtime systems so they do not compete.
+OpenClaw kept expanding its runtime memory stack across the 2026.4 and 2026.6 lines: Dreaming for background consolidation, Active Memory for pre-reply recall, Memory Wiki for compiled knowledge views, People Wiki (2026.4.29) for entity-compiled profiles and provenance, plus Skill Workshop and Workboard (2026.6.1) for governed skill lifecycle and multi-agent coordination. This release keeps `memory-governor` focused on the governance layer it was always designed for, while aligning its boundaries with all of those runtime systems so they do not compete.
 
 In short:
 
 - Dreaming handles background consolidation.
 - Active Memory handles runtime recall before replies.
-- Memory Wiki handles compiled wiki-style views, provenance, and shared search surfaces.
-- `memory-governor` handles capture rules, target classes, correction staging, and hardening boundaries.
+- Memory Wiki handles compiled wiki-style views, claims/provenance, and shared search surfaces.
+- People Wiki handles entity-compiled profiles and relationship graphs.
+- Skill Workshop / Workboard handle skill lifecycle and multi-agent coordination.
+- `memory-governor` handles capture rules, target classes, correction staging, scope/privacy boundaries, and hardening boundaries.
 
 ## Why Install It
 
@@ -39,6 +41,12 @@ This is not an execution-first productivity skill. It is infrastructure for memo
   Dreaming-preferred for `daily_memory -> long_term_memory`, manual review for correction hardening and system-rule promotion
 - Boundaries for Dreaming artifacts:
   `DREAMS.md` and `memory/.dreams/` are engine-owned artifacts, not standard memory target classes
+- A consolidated compiled-surfaces boundary:
+  People Wiki, Memory Wiki claims, Memory Palace, Imported Insights, and Provenance Views are all downstream compiled / runtime surfaces, not target classes
+- A scope / privacy boundary:
+  scoped memories (project, chat, agent) should record scope at capture time so compiled surfaces do not widen them, complementing Active Memory Filters such as `allowedChatIds` / `deniedChatIds`
+- A multi-agent writer rule:
+  coordinated agents on Workboard should not each harden unconfirmed intermediate state
 - Host manifest support through `memory-governor-host.toml`
 - Host checker, frontmatter validator, candidate reviewer, and generic-host bootstrap scripts
 - A generic host example that does not require OpenClaw-specific directories
@@ -116,6 +124,19 @@ Practical rule:
 - canonical durable truth still lives in the host's memory contract
 - wiki outputs should be treated as downstream compiled views, recall aids, and provenance-friendly summaries
 
+## Alignment with People Wiki and Imported Insights
+
+OpenClaw 2026.4.29 added People Wiki (entity-compiled profiles, relationship graphs, canonical aliases) and provenance views, plus Active Memory Filters for recall-time access control. Later builds added Imported Insights and Memory Palace.
+
+The boundary is the same as for Memory Wiki:
+
+- People Wiki, Person Cards, Relationship Graphs, Memory Palace, and Provenance Views are compiled / UI surfaces, not target classes
+- entity facts are captured upstream into `long_term_memory` / `project_facts` / `learning_candidates`, then compiled
+- Imported Insights are unverified by this host and should stage through `learning_candidates`, not jump to canonical truth
+- Active Memory Filters (`allowedChatIds` / `deniedChatIds`) are a recall-time control; capture-time governance still records scope on the target class entry so a compiled surface cannot widen it
+
+The full surface inventory and the capture-vs-compile rule live in [compiled-surfaces.md](references/compiled-surfaces.md).
+
 ## Implications for OpenClaw Hosts
 
 If your host enables newer OpenClaw memory features:
@@ -152,8 +173,9 @@ Recommended first reading path:
 2. [memory-routing.md](references/memory-routing.md)
 3. [promotion-rules.md](references/promotion-rules.md)
 4. [dreaming-integration.md](references/dreaming-integration.md)
-5. [adapters.md](references/adapters.md)
-6. [installation-integration.md](references/installation-integration.md)
+5. [compiled-surfaces.md](references/compiled-surfaces.md)
+6. [adapters.md](references/adapters.md)
+7. [installation-integration.md](references/installation-integration.md)
 
 For a generic host example:
 
@@ -222,22 +244,24 @@ It gives the host a contract. The host still decides how to integrate it.
 
 ## Current Version
 
-`0.2.9`
+`0.3.0`
 
 ## 中文
 
-**面向 AI agent 的记忆治理内核。现在已和 OpenClaw Dreaming、Active Memory、Memory Wiki 重新对齐边界。**
+**面向 AI agent 的记忆治理内核。已和 OpenClaw 2026.6.x 记忆栈重新对齐边界：Dreaming、Active Memory、Memory Wiki、People Wiki，以及 Skill Workshop / Workboard 时代。**
 
 `memory-governor` 适合已经出现多层记忆、多种写记忆 skill、或者可选 adapter 越来越多的宿主系统。它本来就在解决记忆治理问题：什么值得记、应该进入哪一层、什么时候保持短期、什么时候可以被硬化成长期规则。
 
-OpenClaw 4.5 以及 2026 年 4 月后续更新，把 runtime memory stack 补得更完整了：Dreaming 负责后台巩固，Active Memory 负责回复前 recall，Memory Wiki 负责把已有记忆编译成 wiki 视图和 provenance 友好的知识层。所以这次更新不是因为这些能力才开始做 `memory-governor`，而是把已有的治理内核和它们重新对齐边界，避免重复或冲突。
+OpenClaw 在 2026.4 和 2026.6 两条线上持续补齐 runtime memory stack：Dreaming 负责后台巩固，Active Memory 负责回复前 recall，Memory Wiki 负责把已有记忆编译成 wiki 视图和 provenance 友好的知识层，People Wiki（2026.4.29）负责实体画像和关系图谱，Skill Workshop / Workboard（2026.6.1）负责 skill 生命周期治理和多 agent 协作。所以这次更新不是因为这些能力才开始做 `memory-governor`，而是把已有的治理内核和它们重新对齐边界，避免重复或冲突。
 
 一句话：
 
 - Dreaming 负责后台巩固。
 - Active Memory 负责运行时 recall。
-- Memory Wiki 负责编译后的 wiki 视图、provenance 和共享搜索面。
-- `memory-governor` 负责捕获规则、target classes、纠错候选层和 hardening 边界。
+- Memory Wiki 负责编译后的 wiki 视图、claims/provenance 和共享搜索面。
+- People Wiki 负责实体画像和关系图谱。
+- Skill Workshop / Workboard 负责 skill 生命周期和多 agent 协作。
+- `memory-governor` 负责捕获规则、target classes、纠错候选层、scope/隐私边界和 hardening 边界。
 
 ## 为什么安装
 

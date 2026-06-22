@@ -159,9 +159,48 @@ adapter 的职责：
 
 两者可以配合，但不应争同一类输入。
 
+## Compiled-Surface-Aware Capture Policy
+
+新版 OpenClaw 增加了 People Wiki、Memory Wiki（Claim/Evidence）、Memory Palace、Imported Insights 等编译 / 运行时表面。
+
+skill 不应把这些表面当成 capture 入口或新的 target class。
+
+默认分工应是：
+
+- 稳定人物事实 -> `long_term_memory`
+- 项目内人物关系 -> `project_facts`
+- 未验证的人物推断 -> `learning_candidates`
+- 外部导入内容（Imported Insights） -> 先当 `learning_candidates`，不直接成长期记忆
+- Claim / Provenance 是编译产物，不是 capture 层
+
+不要这样做：
+
+- 让 skill 直接写 `people/` 目录或 Person Card
+- 把外部导入内容直接写进 `long_term_memory`
+- 因为一条 Claim 出现在 Memory Wiki，就认为它已经被 promote
+
+完整清单见 [compiled-surfaces.md](compiled-surfaces.md)。
+
+## Skill Workshop 版本化
+
+OpenClaw 2026.6.1 的 Skill Workshop 让 skill 走 提案 → 审核 → 发布，并带版本管理和回滚。
+
+对 `Memory Contract` 的影响：
+
+- skill 的 `Memory Contract` 声明应随 skill 版本一起管理
+- skill 回滚时，它引入的记忆规则应一起回滚，避免留下孤儿规则
+- 新版本 skill 如果改了 target class 映射，应显式说明旧映射如何迁移，而不是让两套映射同时生效
+
+建议：
+
+- 在 `Memory Contract` 里标注依赖的 `memory-governor` 最低版本
+- 回滚 skill 时，同时检查它是否写过 `system_rules` / `tool_rules`，避免回滚后规则与代码不一致
+
 ## 禁止事项
 
 - 不把 `memory-governor` 变成下游写入总线
 - 不要求所有 skill 重构成同一种文件结构
 - 不为了一致性而打断已有有效工作流
 - 不把 Dreaming 当成跳过候选层或人工升格的理由
+- 不把 People Wiki / Memory Wiki / Memory Palace 当成 capture 入口或新 target class
+- skill 回滚后留下与代码不一致的孤儿记忆规则

@@ -2,6 +2,32 @@
 
 ## Unreleased
 
+## 0.3.0 - 2026-06-23
+
+### Added
+
+- `references/compiled-surfaces.md` as the canonical inventory of official OpenClaw runtime / compiled surfaces that are NOT memory target classes
+- governance rules for imported content (Imported Insights / cross-platform imports): stage through `learning_candidates`, do not jump to canonical truth
+- governance rules for entity memory: capture entity facts into `long_term_memory` / `project_facts` / `learning_candidates`, never directly into a `people/` surface or Person Card
+- a scope / privacy boundary that complements Active Memory Filters (`allowedChatIds` / `deniedChatIds`): record scope at capture time so compiled surfaces cannot widen it
+- a Multi-Agent Writer Rule covering coordinated agents on Workboard (2026.6.1+), extending the existing skill-level Multi-Writer Rule to agent-level
+- Skill Workshop (2026.6.1+) versioning guidance: a skill's `Memory Contract` should version and roll back with the skill
+
+### Changed
+
+- README and SKILL positioning now align with the OpenClaw 2026.6.x memory stack instead of stopping at 4.5 / April 2026
+- alignment sections now cover People Wiki (2026.4.29), Memory Wiki Claim/Evidence, Memory Palace, Imported Insights, and Provenance Views, not only Dreaming / Active Memory / Memory Wiki
+- `read-order.md` now lists Memory Palace, Imported Insights, Obsidian Vault outputs, Person Cards, and Relationship Graphs as non-default-startup surfaces, and cites official stale-REM filtering and partial-recall-on-timeout as validation of the existing boundary
+- `exclusions.md` now covers external imports and scoped-memory capture
+- `dreaming-integration.md` now points to the broader compiled-surfaces boundary and notes the Active Memory Filters privacy interaction
+- `host-profiles.md` OpenClaw profile now references People Wiki, Active Memory Filters, Imported Insights / Memory Palace, and Workboard multi-agent behavior
+- `skill-integration.md` now forbids treating compiled surfaces as capture layers and adds Skill Workshop versioning rules
+
+### Notes
+
+- the 9 standard target classes are unchanged; no new target class was introduced, to avoid competing with official compiled surfaces
+- this is a boundary expansion release, not a contract break
+
 ## 0.2.10 - 2026-05-28
 
 ### Changed

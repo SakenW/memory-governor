@@ -57,12 +57,14 @@ class ContractDocsTests(unittest.TestCase):
 
     def test_readme_homepage_positioning_includes_learning_candidates(self) -> None:
         content = read(REPO_ROOT / "README.md")
-        self.assertIn("Now aligned with OpenClaw Dreaming", content)
+        self.assertIn("Aligned with the OpenClaw 2026.6.x memory stack", content)
         self.assertIn("was built to give those systems one shared contract", content)
         self.assertIn("`memory type -> target class -> adapter / fallback`", content)
         self.assertIn("`learning_candidates` layer for explicit corrections", content)
         self.assertIn("`memory-governor` 不是因为 Dreaming 才出现的", content)
         self.assertIn("Dreaming 负责后台巩固", content)
+        self.assertIn("People Wiki", content)
+        self.assertIn("compiled-surfaces.md", content)
 
     def test_checker_and_validator_support_learning_candidates(self) -> None:
         checker = read(REPO_ROOT / "scripts" / "check-memory-host.py")
@@ -94,10 +96,23 @@ class ContractDocsTests(unittest.TestCase):
         version = read(REPO_ROOT / "VERSION").strip()
         changelog = read(REPO_ROOT / "CHANGELOG.md")
 
-        self.assertEqual(version, "0.2.10")
+        self.assertEqual(version, "0.3.0")
+        self.assertIn("## 0.3.0 - 2026-06-23", changelog)
         self.assertIn("## 0.2.10 - 2026-05-28", changelog)
         self.assertIn("Active Memory", changelog)
         self.assertIn("learning_candidates", changelog)
+        self.assertIn("compiled-surfaces.md", changelog)
+
+    def test_compiled_surfaces_reference_exists_and_binds_new_official_surfaces(self) -> None:
+        path = REPO_ROOT / "references" / "compiled-surfaces.md"
+        self.assertTrue(path.exists(), f"missing {path}")
+        content = read(path)
+        self.assertIn("none of them is a memory target class", content)
+        self.assertIn("People Wiki", content)
+        self.assertIn("Memory Palace", content)
+        self.assertIn("Imported Insights", content)
+        self.assertIn("allowedChatIds", content)
+        self.assertIn("[dreaming-integration.md](dreaming-integration.md)", content)
 
     def test_publish_bundle_is_synced_for_core_contract_files(self) -> None:
         relative_paths = [
@@ -110,9 +125,12 @@ class ContractDocsTests(unittest.TestCase):
             "references/adapter-manifest.md",
             "references/adapters.md",
             "references/candidate-review.md",
+            "references/compiled-surfaces.md",
             "references/correction-pipeline.md",
             "references/dreaming-integration.md",
+            "references/exclusions.md",
             "references/host-checker.md",
+            "references/host-profiles.md",
             "references/installation-integration.md",
             "references/memory-routing.md",
             "references/migration-guide.md",
@@ -120,6 +138,7 @@ class ContractDocsTests(unittest.TestCase):
             "references/read-order.md",
             "references/routing-precedence.md",
             "references/skill-integration.md",
+            "references/stateful-targets.md",
             "assets/fallbacks/learning-candidates.md",
             "scripts/check-memory-host.py",
             "scripts/review-learning-candidates.py",
