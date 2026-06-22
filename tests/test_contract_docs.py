@@ -96,12 +96,14 @@ class ContractDocsTests(unittest.TestCase):
         version = read(REPO_ROOT / "VERSION").strip()
         changelog = read(REPO_ROOT / "CHANGELOG.md")
 
-        self.assertEqual(version, "0.3.0")
+        self.assertEqual(version, "0.3.1")
+        self.assertIn("## 0.3.1 - 2026-06-23", changelog)
         self.assertIn("## 0.3.0 - 2026-06-23", changelog)
         self.assertIn("## 0.2.10 - 2026-05-28", changelog)
         self.assertIn("Active Memory", changelog)
         self.assertIn("learning_candidates", changelog)
         self.assertIn("compiled-surfaces.md", changelog)
+        self.assertIn("project_facts", changelog)
 
     def test_skill_frontmatter_exposes_version_matching_version_file(self) -> None:
         skill = read(REPO_ROOT / "SKILL.md")

@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## 0.3.1 - 2026-06-23
+
+### Changed
+
+- generic-host example manifest now maps `project_facts` as `directory` (`docs/projects`) instead of a single global file, because `project_facts` is the only target class that is inherently multi-project
+- `references/adapter-manifest.md` now documents that `project_facts` is special: it must not be pinned to a single workspace-root file, and multi-project hosts should use `directory` or `pattern`
+
+### Removed
+
+- `examples/generic-host/docs/project-facts.md` (replaced by `docs/projects/README.md` explaining the per-project layout)
+
 ## 0.3.0 - 2026-06-23
 
 ### Added

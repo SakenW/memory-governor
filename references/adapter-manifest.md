@@ -297,6 +297,37 @@ structured = true
 - 已经按 domain / project 拆分：`directory`
 - 已有成熟命名约定但不想重构：`pattern`
 
+## project_facts 是特殊的
+
+`project_facts` 是 9 个 target class 里唯一**天然多项目**的。其余 8 个都是工作区全局的，但 `project_facts` 离开项目就没意义。
+
+因此：
+
+- **不要**把 `project_facts` 映射成单个全局文件（`mode = "single"` + 一个工作区根文件）
+- 多项目宿主应使用 `directory` 或 `pattern`，承认事实分散在多个项目里：
+
+```toml
+[targets.project_facts]
+mode = "directory"
+paths = ["docs/projects"]
+```
+
+或：
+
+```toml
+[targets.project_facts]
+mode = "pattern"
+paths = ["docs/projects/*.md"]
+```
+
+- 如果项目已经有自己的 `README.md`、`progress.md` 等文档，可以直接写进项目自己的文档，不强制单独建文件
+- 如果宿主完全不想在工作区根声明 `project_facts`（每个项目自己管），也可以从 manifest 省略这一条——但要意识到这样 checker 就无法验证它的路由
+
+常见错误：
+
+- 把多个项目的事实挤进一个全局 `docs/project-facts.md`，破坏项目作用域语义
+- 用 `mode = "single"` 暗示 project_facts 像其他 target 一样只有一个全局落点
+
 ## Checker Behavior
 
 `check-memory-host.py` 的顺序是：

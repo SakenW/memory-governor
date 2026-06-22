@@ -38,7 +38,7 @@ copy_if_missing "$EXAMPLE_ROOT/memory/learning-candidates.md" "$TARGET_ROOT/memo
 copy_if_missing "$EXAMPLE_ROOT/memory/proactive-state.md" "$TARGET_ROOT/memory/proactive-state.md"
 copy_if_missing "$EXAMPLE_ROOT/memory/reusable-lessons.md" "$TARGET_ROOT/memory/reusable-lessons.md"
 copy_if_missing "$EXAMPLE_ROOT/memory/working-buffer.md" "$TARGET_ROOT/memory/working-buffer.md"
-copy_if_missing "$EXAMPLE_ROOT/docs/project-facts.md" "$TARGET_ROOT/docs/project-facts.md"
+copy_if_missing "$EXAMPLE_ROOT/docs/projects/README.md" "$TARGET_ROOT/docs/projects/README.md"
 copy_if_missing "$EXAMPLE_ROOT/docs/tool-rules.md" "$TARGET_ROOT/docs/tool-rules.md"
 copy_if_missing "$EXAMPLE_ROOT/skills/example-writer/SKILL.md" "$TARGET_ROOT/skills/example-writer/SKILL.md"
 

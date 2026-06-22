@@ -39,8 +39,8 @@ paths = ["memory/working-buffer.md"]
 structured = true
 
 [targets.project_facts]
-mode = "single"
-paths = ["docs/project-facts.md"]
+mode = "directory"
+paths = ["docs/projects"]
 structured = false
 
 [targets.system_rules]
