@@ -37,7 +37,7 @@ sh scripts/bootstrap-generic-host.sh /path/to/host-root
 - `memory/proactive-state.md`
 - `memory/reusable-lessons.md`
 - `memory/working-buffer.md`
-- `docs/project-facts.md`
+- `docs/projects/README.md`
 - `docs/tool-rules.md`
 - `skills/example-writer/SKILL.md`
 - `notes/daily/`

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 0.3.2 - 2026-06-23
+
+### Changed
+
+- cleaned up stale `project_facts` single-file references in `adapter-map.md`, generic-host `README.md`, and `bootstrap.md` so they match the `directory` mapping introduced in 0.3.1
+
+
 ## 0.3.1 - 2026-06-23
 
 ### Changed

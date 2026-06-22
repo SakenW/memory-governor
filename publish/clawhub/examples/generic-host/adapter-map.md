@@ -14,7 +14,7 @@
 - `reusable_lessons` -> `memory/reusable-lessons.md`
 - `proactive_state` -> `memory/proactive-state.md`
 - `working_buffer` -> `memory/working-buffer.md`
-- `project_facts` -> `docs/project-facts.md`
+- `project_facts` -> `docs/projects/` (directory, per-project files)
 - `system_rules` -> `HOST.md`
 - `tool_rules` -> `docs/tool-rules.md`
 

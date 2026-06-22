@@ -96,8 +96,8 @@ class ContractDocsTests(unittest.TestCase):
         version = read(REPO_ROOT / "VERSION").strip()
         changelog = read(REPO_ROOT / "CHANGELOG.md")
 
-        self.assertEqual(version, "0.3.1")
-        self.assertIn("## 0.3.1 - 2026-06-23", changelog)
+        self.assertEqual(version, "0.3.2")
+        self.assertIn("## 0.3.2 - 2026-06-23", changelog)
         self.assertIn("## 0.3.0 - 2026-06-23", changelog)
         self.assertIn("## 0.2.10 - 2026-05-28", changelog)
         self.assertIn("Active Memory", changelog)

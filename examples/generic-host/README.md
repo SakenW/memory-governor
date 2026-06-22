@@ -38,8 +38,8 @@
   本地 fallback 示例
 - `memory/working-buffer.md`
   本地 fallback 示例
-- `docs/project-facts.md`
-  `project_facts` 落点示例
+- `docs/projects/`
+  `project_facts` 落点示例（directory 模式，每个项目一份）
 - `docs/tool-rules.md`
   `tool_rules` 落点示例
 
