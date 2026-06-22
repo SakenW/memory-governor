@@ -111,6 +111,23 @@ capture 阶段遇到歧义时，先看 [routing-precedence.md](routing-precedenc
 
 Dreaming 不应直接决定 `AGENTS.md`、`TOOLS.md`、`SOUL.md` 这类治理文件。
 
+## 两段式 Manual Path（不可跳级）
+
+从候选层到系统级规则是**两段式 manual-only**，不允许一步跳：
+
+1. `learning_candidates -> reusable_lessons`（manual-only）
+2. `reusable_lessons -> system_rules / tool_rules / AGENTS / TOOLS / SOUL`（再一步 manual-only）
+
+候选层**不能直接升到** `AGENTS` / `TOOLS` / `SOUL`，必须先过 `reusable_lessons`。跳级会把未验证的纠错直接固化成全局规则。
+
+## Dreaming 不是无条件默认
+
+`daily_memory -> long_term_memory` 交给 Dreaming 只在** Dreaming-enabled host** 下成立。
+
+- Dreaming 启用且可用：Dreaming 负责 daily 巩固，人工不重复长期化同一批 daily notes
+- Dreaming 未启用 / 不可用：才走人工 promotion 作为 fallback
+- 人工 promotion 和 Dreaming 不应同时对同一批 daily notes 做默认长期化
+
 ## 禁止升级的情况
 
 - 原始长日志直接升到长期层
