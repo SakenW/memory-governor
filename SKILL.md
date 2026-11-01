@@ -3,7 +3,7 @@ name: memory-governor
 slug: memory-governor
 version: 0.3.2
 homepage: https://github.com/SakenW/memory-governor
-description: "Memory governance kernel for AI agents that complements the OpenClaw 2026.6.x memory stack (Dreaming, Active Memory, Memory Wiki, People Wiki, Skill Workshop / Workboard) with explicit correction staging, target-class routing, compiled-surface boundaries, scope/privacy rules, and safer manual hardening rules."
+description: AI agent 记忆治理内核，补充 OpenClaw 2026.6.x 记忆体系（Dreaming、Active Memory、Memory Wiki、People Wiki、Skill Workshop / Workboard）：提供显式纠错暂存、目标类路由、编译面边界、范围与隐私规则、更安全的手动加固规则。用于记忆纠错、目标类路由、记忆安全加固时调用。
 changelog: "Aligns with OpenClaw 2026.6.x; declares all official compiled surfaces (People Wiki, Memory Wiki claims, Memory Palace, Imported Insights, Provenance) downstream of the contract. Adds references/compiled-surfaces.md plus scope/privacy, multi-agent writer, and Skill Workshop versioning rules. 9 target classes unchanged."
 metadata: {"clawdbot":{"emoji":"🧭","requires":{"bins":[]},"os":["linux","darwin","win32"],"configPaths":["./memory-governor-host.toml"],"configPaths.optional":["./MEMORY.md","./AGENTS.md","./TOOLS.md","./SOUL.md","./memory/"]}}
 ---
