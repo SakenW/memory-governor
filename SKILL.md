@@ -1,10 +1,10 @@
 ---
 name: memory-governor
 slug: memory-governor
-version: 0.3.2
+version: 0.4.0
 homepage: https://github.com/SakenW/memory-governor
-description: AI agent 记忆治理内核，补充 OpenClaw 2026.6.x 记忆体系（Dreaming、Active Memory、Memory Wiki、People Wiki、Skill Workshop / Workboard）：提供显式纠错暂存、目标类路由、编译面边界、范围与隐私规则、更安全的手动加固规则。用于记忆纠错、目标类路由、记忆安全加固时调用。
-changelog: "Aligns with OpenClaw 2026.6.x; declares all official compiled surfaces (People Wiki, Memory Wiki claims, Memory Palace, Imported Insights, Provenance) downstream of the contract. Adds references/compiled-surfaces.md plus scope/privacy, multi-agent writer, and Skill Workshop versioning rules. 9 target classes unchanged."
+description: AI agent 记忆治理内核，补充 OpenClaw 2026.10.x 记忆体系（Dreaming、Active Memory、Memory Wiki、Imported Insights、Provenance 与记忆删除、Standing Intents、自动 memory flush、项目级记忆）：提供显式纠错暂存、目标类路由、编译面边界、范围与隐私规则、更安全的手动加固规则。用于记忆纠错、目标类路由、记忆安全加固时调用。
+changelog: "Aligns with OpenClaw 2026.10.x; adds provenance origin classes and session-kind gating, recall-loop prevention, admission/deletion boundaries, project-scoped memory annotations, the USER.md directive contract, and standing-intent (prospective memory) boundaries. Removes stale People Wiki / Memory Palace surface claims. 9 target classes unchanged."
 metadata: {"clawdbot":{"emoji":"🧭","requires":{"bins":[]},"os":["linux","darwin","win32"],"configPaths":["./memory-governor-host.toml"],"configPaths.optional":["./MEMORY.md","./AGENTS.md","./TOOLS.md","./SOUL.md","./memory/"]}}
 ---
 

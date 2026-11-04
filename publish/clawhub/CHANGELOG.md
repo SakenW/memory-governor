@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## 0.4.0 - 2026-11-04
+
+### Changed
+
+- aligned with OpenClaw 2026.10.x: provenance origin classes, session-kind gating, recall-loop prevention, and turn taint
+- `compiled-surfaces.md` now treats Memory Wiki people reports as entity surfaces and removes the standalone People Wiki / Memory Palace claims
+- added runtime write-path, prospective-memory, and admission/deletion boundaries
+- `host-profiles.md` now records project-scoped annotations, the `USER.md` directive contract, standing intents, and the pre-compaction flush rule
+- `read-order.md` no longer references People Wiki or Memory Palace as separate UI surfaces
+
+
 ## 0.3.2 - 2026-06-23
 
 ### Changed

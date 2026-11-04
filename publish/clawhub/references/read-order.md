@@ -158,9 +158,9 @@
 而不是：
 
 - `WIKI.md`
-- entity pages / Person Cards / Relationship Graphs（People Wiki）
+- entity pages / Person Cards / Relationship Graphs（Memory Wiki people reports）
 - synthesis pages
-- Memory Palace / Imported Insights 等 UI 面
+- Imported Insights 等 UI 面
 - Obsidian Vault 产物（`00_Index/`、`03_Memories/`、`04_Claims/` 等）
 
 wiki 更适合：
@@ -170,13 +170,13 @@ wiki 更适合：
 - contradiction review
 - human-readable compiled summaries
 
-### People Wiki / Claim / Provenance
+### People / Claim / Provenance
 
 这些是 entity-compiled 或 claim-compiled 表面，不是 target class。
 
 读取时：
 
-- 需要跨人物关系、聚合视图时查询 People Wiki
+- 需要跨人物关系、聚合视图时查询 Memory Wiki 的人物报告
 - 需要证据链、矛盾追踪时查询 Claim / Provenance
 - 不要把 Person Card 或 Claim 当成 capture 入口，也不要当成默认启动记忆
 

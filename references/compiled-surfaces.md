@@ -4,7 +4,7 @@
 
 Give one canonical place that lists every official OpenClaw runtime / compiled memory artifact and declares that **none of them is a memory target class**.
 
-This file exists because OpenClaw keeps adding memory-related surfaces (Dreaming, Active Memory, Memory Wiki, People Wiki, Memory Palace, Imported Insights, and more). Each of them is useful, but none of them replaces the governance contract.
+This file exists because OpenClaw keeps adding memory-related surfaces (Dreaming, Active Memory, Memory Wiki, Imported Insights, session memory search, and more). Each of them is useful, but none of them replaces the governance contract.
 
 If this list is not explicit, skills slowly start writing directly to those surfaces, and the contract drifts.
 
@@ -65,10 +65,12 @@ These compile existing memory into navigable, machine-readable, or human-readabl
 
 ### Entity-compiled surfaces
 
-- People Wiki
+- Memory Wiki people reports (`reports/person-agent-directory.md` and related pages)
 - Person Cards
 - Relationship Graphs
 - Canonical alias maps
+
+People surfaces are reports inside Memory Wiki, not a separate product surface. Do not assume a standalone People Wiki or a `people/` capture directory exists.
 
 These compile entity facts that were already captured into target classes. They do **not** introduce an `entity_memory` or `people` target class.
 
@@ -82,19 +84,39 @@ Do not write skills that emit directly into a `people/` directory or a Person Ca
 
 ### UI / navigation surfaces
 
-- Memory Palace
-- Imported Insights tabs
+- Control UI Memory -> Dreams -> Diary (Memory Wiki and Imported Insights sub-tabs)
 - Dashboard / Home pages
 
 These are presentation layers. They are not memory layers.
 
 ### Provenance surfaces
 
-- Provenance Views
-- Source drilldowns
+- Provenance views and source drilldowns
+- Origin class (`owner`, `agent`, `untrusted`, `system`) and session kind recorded in the memory index
+- Observed timestamp and supersession key lineage
 - Evidence-kind reports
 
-Provenance is a property of compiled claims, not a target class. A provenance trail is useful for trust and audit, but it does not promote a candidate into a rule.
+Provenance is a property of recorded memory and compiled claims, not a target class. A provenance trail is useful for trust and audit, but it does not promote a candidate into a rule.
+
+### Runtime write paths
+
+- Dreaming is the default consolidation writer for `daily_memory -> long_term_memory`; it is gated, not a manual capture surface.
+- The pre-compaction memory flush writes only new text to the daily note. Replayed whole notes are rejected, so a flush retry must contain only the missing entries.
+- Session transcript ingestion stages entries with their source session; consolidation carries those origins forward.
+- Content recalled from memory is structurally marked and never re-extracted as a new memory, so repeated recall cannot create duplicates.
+- A tool result declaring network-sourced content taints the rest of that turn as `untrusted`, even inside an owner turn.
+
+### Prospective memory
+
+- Time-based intentions compile to scheduled tasks.
+- Event-based intentions live in a per-agent SQLite table through the `intent` tool, with keyword, channel, sender, expiry, fire-budget, and cooldown fields.
+- Standing intents are not a Markdown memory target class. Do not copy armed intents into `long_term_memory` as prose.
+
+### Admission and deletion
+
+- Admission policy can exclude matching sources from dreaming ingestion and session backfill.
+- `openclaw memory forget` removes tracked entries derived from selected sessions and excludes those sessions from future ingestion.
+- Neither control covers every workspace write or retained copy, so deletion claims must stay scoped to what the tool actually covers.
 
 ## Privacy and Scope Boundary
 
